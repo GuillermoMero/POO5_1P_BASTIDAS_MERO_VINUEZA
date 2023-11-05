@@ -11,6 +11,6 @@ package com.mycompany.proyecto1p_grupo2;
 public class Proyecto1P_Grupo2 {
 
     public static void main(String[] args) {
-        System.out.println("pedro picapiedra");
+        System.out.println("pedro picapiedra bbbbbbbbbb");
     }
 }
