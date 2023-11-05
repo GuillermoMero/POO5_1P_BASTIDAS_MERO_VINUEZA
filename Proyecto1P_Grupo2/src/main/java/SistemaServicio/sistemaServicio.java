@@ -10,7 +10,7 @@ import Usuario.Usuario;
  *
  * @author Paula
  */
-public class sistemaServicio {
+public class SistemaServicio {
      private Usuario usuario;
      private String opcion;
     public static void main(String[] args){   
