@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Servicio;
-
+import Usuario.Cliente;
+import Usuario.Conductor;
 /**
  *
  * @author Paula
@@ -68,7 +69,7 @@ public class Servicio {
         return this.tipoServicio;
     }
     
-    public void setTipoServicio(TipoServicio tipoServiico){
-        this.tipoServicio = tipoServico;
+    public void setTipoServicio(TipoServicio tipoServicio){
+        this.tipoServicio = tipoServicio;
     }
 }
