@@ -5,24 +5,34 @@
 package SistemaServicio;
 
 import Usuario.Usuario;
+import manejoArchivos.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author Paula
  */
 public class SistemaServicio {
-     private Usuario usuario;
-     private String opcion;
-    public static void main(String[] args){   
+    
+    private String opcion;
+    
+    
+    ManejoArchivo manArch = new ManejoArchivo();
+    ArrayList<String> usuarios = manArch.LeeFichero("usuarios.txt");
+    
+    
+    public SistemaServicio(String opcion){
+        this.opcion = opcion;
+        
     }
+     
+     
+     
+     
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+
+    
 
     public String getOpcion() {
         return opcion;
