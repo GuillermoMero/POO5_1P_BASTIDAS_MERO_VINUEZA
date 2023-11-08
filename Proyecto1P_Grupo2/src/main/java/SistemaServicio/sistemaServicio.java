@@ -20,7 +20,6 @@ public class SistemaServicio {
     ManejoArchivo manArch = new ManejoArchivo();
     ArrayList<String> usuarios = manArch.LeeFichero("usuarios.txt");
     
-    
     public SistemaServicio(String opcion){
         this.opcion = opcion;
         
