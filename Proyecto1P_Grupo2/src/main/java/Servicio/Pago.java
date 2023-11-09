@@ -15,6 +15,7 @@ public class Pago {
     private String formaPago;
     private String cedulaCliente;
     private double valorPago;
+    private TipoPago tipoPago;
     
     public Pago(int numeroPago, String fechaPago, int numeroServicio, String formaPago, String cedulaCliente, double valorPago){
       this.numeroPago=numeroPago;

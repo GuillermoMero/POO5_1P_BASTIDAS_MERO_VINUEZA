@@ -13,8 +13,8 @@ public class Encomienda extends Servicio{
     private TipoEncomienda tipoEncomienda;
     private int cantidadProducto;
     private double peso;
-    public Encomienda(String fecha, Cliente cliente, String origen, String destino, Conductor conductor, TipoServicio tipoServicio ){
-        super(fecha, cliente, origen, destino, conductor, tipoServicio);
+    public Encomienda(String fecha, String hora, Cliente cliente, String origen, String destino, Conductor conductor, TipoServicio tipoServicio ){
+        super(fecha, hora, cliente, origen, destino, conductor, tipoServicio);
     }
     public void setTipoEcomienda(TipoEncomienda tipoEncomienda){
         this.tipoEncomienda=tipoEncomienda;

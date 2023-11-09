@@ -13,17 +13,17 @@ public class Usuario {
     protected String nombre;
     protected String apellidos;
     protected String usuario;
-    protected String contraseña;
+    protected String contrasena;
     protected String numeroCelular;
     protected int edad;
     protected TipoUsuario tipoUsuario;
     
-    public Usuario(String numeroCedula,String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, int edad, TipoUsuario tipoUsuario){
+    public Usuario(String numeroCedula,String nombre, String apellidos, String usuario, String contrasena, String numeroCelular, int edad, TipoUsuario tipoUsuario){
         this.numeroCedula=numeroCedula;
         this.nombre=nombre;
         this.apellidos=apellidos;
         this.usuario=usuario;
-        this.contraseña=contraseña;
+        this.contrasena=contrasena;
         this.numeroCelular=numeroCelular;
         this.tipoUsuario=tipoUsuario;
     }
@@ -45,8 +45,8 @@ public class Usuario {
         return usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     public String getNumeroCelular() {
@@ -77,8 +77,8 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContraseña(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public void setNumeroCelular(String numeroCelular) {
