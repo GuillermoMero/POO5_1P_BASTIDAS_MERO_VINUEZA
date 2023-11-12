@@ -6,14 +6,13 @@ package Servicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
 import java.util.Scanner;
+import java.util.Random;
 /**
  *
  * @author Paula
  */
 public class Taxi extends Servicio{
     private int numeroPasajero;
-    private Vehiculo tipoVehiculo;
-    private double tarifa;
     private Scanner sc;
     
     public Taxi(){
@@ -21,8 +20,11 @@ public class Taxi extends Servicio{
         
     }
     
-    public Taxi(String fecha, String hora, Cliente cliente, String origen, String destino, Conductor conductor, TipoServicio tipoServicio){
-        super(fecha, hora, cliente, origen, destino, conductor, tipoServicio); 
+    public Taxi(String cedulaCliente, String nombreConductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
+        super(TipoServicio.valueOf("T"), cedulaCliente, nombreConductor, origen, destino, fecha, hora, tipoPago);
+        this.numeroPasajero = numeroPasajero;
+        Random rd = new Random();
+        final double DISTANCIA = rd.nextInt(40) + 5;
         sc = new Scanner(System.in);
     }
 
@@ -34,24 +36,10 @@ public class Taxi extends Servicio{
         this.numeroPasajero = numeroPasajero;
     }
 
-    public Vehiculo getTipoVehiculo() {
-        return tipoVehiculo;
-    }
 
-    public void setTipoVehiculo(Vehiculo tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
-
-    public double getTarifa() {
-        return tarifa;
-    }
-
-    public void setTarifa(double tarifa) {
-        this.tarifa = tarifa;
-    }
     
-    public void solicitarTaxi(){
-        System.out.println("DETALLES DE LA RUTA");
+    public void solicitarTaxi(Cliente cliente, Conductor conductor){
+        System.out.println("/*************DETALLES DE LA RUTA*************/");  
         System.out.print("Origen: ");
         origen = sc.next();
         System.out.print("Destino: ");
@@ -65,8 +53,6 @@ public class Taxi extends Servicio{
         tipoPago = TipoPago.valueOf(tipo);
         System.out.print("Numero de pasajeros: ");
         numeroPasajero = sc.nextInt();
-        //Taxi taxi = new Taxi(origen, destino, fecha, hora, tipoPago, );
-    }
-    
-    
+        Taxi taxi = new Taxi(cliente.getNumeroCedula(), conductor.getNombre(), origen, destino, fecha, hora, tipoPago, numeroPasajero);
+    }  
 }

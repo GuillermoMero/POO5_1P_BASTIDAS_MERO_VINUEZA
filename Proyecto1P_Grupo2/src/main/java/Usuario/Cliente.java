@@ -9,14 +9,15 @@ package Usuario;
  * @author PEDRO VINUEZA
  */
 public class Cliente extends Usuario{
-    private String numeroTarjetaCredito;
-    public Cliente(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, int edad, TipoUsuario tipoUsuario) {
+    private String numeroTarjeta;
+    public Cliente(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, int edad, TipoUsuario tipoUsuario, String numeroTajerta) {
         super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular, edad, tipoUsuario);
+        this.numeroTarjeta = numeroTarjeta;
     }
-    public void setNumeroTarjetaCredito(String numeroTarjetaCredito){
-        this.numeroTarjetaCredito = numeroTarjetaCredito;
+    public void setNumeroTarjeta(String numeroTarjeta){
+        this.numeroTarjeta = numeroTarjeta;
     }
-    public String getNumeroTarjetaCredito(){
-        return numeroTarjetaCredito;
+    public String getNumeroTarjeta(){
+        return numeroTarjeta;
     }
 }

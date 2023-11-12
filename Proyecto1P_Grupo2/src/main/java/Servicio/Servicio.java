@@ -11,32 +11,34 @@ import java.util.Scanner;
  * @author Paula
  */
 public class Servicio {
-    protected String fecha;
-    protected String hora;
-    protected Cliente cliente;
+    protected int numServicio;
+    protected TipoServicio tipoServicio;
+    protected String cedulaCliente;
+    protected String nombreConductor;
     protected String origen;
     protected String destino;
-    protected Conductor conductor;
-    protected TipoServicio tipoServicio;
+    protected String fecha;
+    protected String hora;
     protected TipoPago tipoPago;
-    
     
     public Servicio(){
         
     }
     
-    public Servicio(String fecha,String hora, Cliente cliente, String origen, String destino, Conductor conductor, TipoServicio tipoServicio){
-        this.fecha = fecha;
-        this.hora = hora;
-        this.cliente = cliente;
+    public Servicio(TipoServicio tipoServicio, String cedulaCliente, String nombreConductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago){
+        this.numServicio++;
+        this.tipoServicio = tipoServicio;
+        this.cedulaCliente = cedulaCliente;
+        this.nombreConductor = nombreConductor;
         this.origen = origen;
         this.destino = destino;
-        this.conductor = conductor;
-        this.tipoServicio = tipoServicio;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.tipoPago = tipoPago;
     }
     
     public String getFecha(){
-        return this.fecha;
+        return fecha;
     }
     
     public void setFecha(String fecha){
@@ -51,16 +53,16 @@ public class Servicio {
         this.hora = hora;
     }
     
-    public Cliente getCliente(){
-        return this.cliente;
+    public String getCedulaCliente(){
+        return cedulaCliente;
     }
     
     public void setCliente(Cliente cliente){
-        this.cliente = cliente;
+        this.cedulaCliente = cedulaCliente;
     }
     
     public String getOrigen(){
-        return this.origen;
+        return origen;
     }
     
     public void setOrigen(String origen){
@@ -68,27 +70,35 @@ public class Servicio {
     }
     
     public String getDestino(){
-        return this.destino;
+        return destino;
     }
     
     public void setDestino(String destino){
         this.destino = destino;
     }
     
-    public Conductor getConductor(){
-        return this.conductor;
+    public String getNombreConductor(){
+        return nombreConductor;
     }
     
     public void setConductor(Conductor conductor){
-        this.conductor = conductor;
+        this.nombreConductor = nombreConductor;
     }
     
     public TipoServicio GetTipoServicio(){
-        return this.tipoServicio;
+        return tipoServicio;
     }
     
     public void setTipoServicio(TipoServicio tipoServicio){
         this.tipoServicio = tipoServicio;
+    }
+    
+    public int getNumServicio(){
+        return numServicio;
+    }
+    
+    public void setNumServicio(int numServicio){
+        this.numServicio = numServicio;
     }
     
     

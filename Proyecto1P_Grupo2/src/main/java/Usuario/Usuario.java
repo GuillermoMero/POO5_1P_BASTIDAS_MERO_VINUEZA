@@ -25,6 +25,7 @@ public class Usuario {
         this.usuario=usuario;
         this.contrasena=contrasena;
         this.numeroCelular=numeroCelular;
+        this.edad = edad;
         this.tipoUsuario=tipoUsuario;
     }
     
