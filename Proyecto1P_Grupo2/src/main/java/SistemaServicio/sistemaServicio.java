@@ -135,9 +135,7 @@ public class SistemaServicio{
         String tarjetaCredito;
         usuarios = crearListaUsuarios();
         String continuar = "SI";
-        String cerrar = "SI";
         
-        do{
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("            BIENVENIDO AL SISTEMA              ");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
@@ -171,9 +169,6 @@ public class SistemaServicio{
                     System.out.println(e);
                 }else if(opcion.equals("3")){
                     clienteSistema.consultarServicio(servicios);
-                }else if(opcion.equals("4")){
-                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO)");
-                    cerrar = sc.next();
                 }   
                 System.out.print("¿Volver al menú? (SI/NO): ");
                 continuar = sc.next();
@@ -190,16 +185,12 @@ public class SistemaServicio{
                 System.out.println("\n");
                 if(opcion.equals("1")){
                     conductorSistema.consultarServicio(servicios);
-                }else if(opcion.equals("3")){
-                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO)");
-                    cerrar = sc.next();
                 }
                 System.out.print("¿Volver al menú? (SI/NO): ");
                 continuar = sc.next();
                 System.out.println("\n");
             }while(continuar.equals("SI"));    
         }
-        }while(cerrar.equals("SI"));
     }
              
 }

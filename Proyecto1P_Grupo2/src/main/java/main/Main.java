@@ -13,7 +13,6 @@ public class Main {
     public static void main(String [] args){
         SistemaServicio sistemServ = new SistemaServicio();
         sistemServ.iniciar();
-        System.out.println("hola");
     }
     
 }
