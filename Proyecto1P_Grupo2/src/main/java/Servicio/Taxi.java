@@ -3,30 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Servicio;
+import SistemaServicio.SistemaServicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
+import Usuario.Usuario;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
+import manejoArchivos.ManejoArchivo;
 /**
  *
  * @author Paula
  */
 public class Taxi extends Servicio{
     private int numeroPasajero;
-    private Scanner sc;
     
     public Taxi(){
-       sc = new Scanner(System.in);
         
     }
     
-    public Taxi(String cedulaCliente, String nombreConductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
-        super(TipoServicio.valueOf("T"), cedulaCliente, nombreConductor, origen, destino, fecha, hora, tipoPago);
+    public Taxi(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
+        super(TipoServicio.valueOf("T"), cliente, conductor, origen, destino, fecha, hora, tipoPago);
         this.numeroPasajero = numeroPasajero;
-        Random rd = new Random();
-        final double DISTANCIA = rd.nextInt(40) + 5;
-        sc = new Scanner(System.in);
     }
+    
 
     public int getNumeroPasajero() {
         return numeroPasajero;
@@ -38,21 +38,55 @@ public class Taxi extends Servicio{
 
 
     
-    public void solicitarTaxi(Cliente cliente, Conductor conductor){
+    public void solicitarTaxi(Cliente cliente){
+        Random rd = new Random();
+        final double COSTO = 0.50;        
+        int DISTANCIA = rd.nextInt(5, 46);
+        double subtotal = (COSTO*DISTANCIA);
+        Scanner sc = new Scanner(System.in); 
         System.out.println("/*************DETALLES DE LA RUTA*************/");  
         System.out.print("Origen: ");
-        origen = sc.next();
+        origen = sc.nextLine();
         System.out.print("Destino: ");
-        destino = sc.next();
+        destino = sc.nextLine();
         System.out.print("Fecha (dd/mm/aa): ");
-        fecha = sc.next();
+        fecha = sc.nextLine();
         System.out.print("Hora: ");
-        hora = sc.next();
+        hora = sc.nextLine();
         System.out.print("Forma de Pago (TC/E): ");
-        String tipo = sc.next();
+        String tipo = sc.nextLine();
         tipoPago = TipoPago.valueOf(tipo);
         System.out.print("Numero de pasajeros: ");
         numeroPasajero = sc.nextInt();
-        Taxi taxi = new Taxi(cliente.getNumeroCedula(), conductor.getNombre(), origen, destino, fecha, hora, tipoPago, numeroPasajero);
+        sc.nextLine();
+        tipoServicio = TipoServicio.T;
+        this.cliente = cliente;
+        System.out.println("El subtotal del valor a pagar por el servicio de taxi es de: "+subtotal);
+        System.out.print("Desea confirmar el viaje(SI/NO): ");
+        String continuar = sc.nextLine().toUpperCase();
+        if (continuar.equals("SI")){
+            double valorPagar = calcularValorPagar(COSTO,DISTANCIA,tipoPago);
+            ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
+            Conductor conductorTaxi = Conductor.seleccionarConductorDisponible(usuarios);
+            conductor = conductorTaxi;
+            String linea1 = ""+(ManejoArchivo.LeeFichero("Viajes.txt").size())+","+numeroPasajero+","+DISTANCIA+","+subtotal;
+            ManejoArchivo.EscribirArchivo("Viajes.txt",linea1);
+            setNumServicio((ManejoArchivo.LeeFichero("Servicios.txt").size()));
+            escribirServicio();
+            SistemaServicio.getServicios().add(this);
+            Pago p = new Pago();
+            p.escribirPago(this, subtotal, valorPagar);
+        }
     }  
+    @Override
+    public double calcularValorPagar(double costo,int distancia) {
+        return costo*distancia;
+    }
+    
+    public double calcularValorPagar(double costo,int distancia,TipoPago tipoPago){
+        if (tipoPago == TipoPago.TC)
+            return (calcularValorPagar( costo, distancia))*1.15;
+        return calcularValorPagar( costo, distancia);
+    }
+    
 }

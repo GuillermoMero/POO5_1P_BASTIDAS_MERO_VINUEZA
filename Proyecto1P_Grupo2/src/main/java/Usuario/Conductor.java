@@ -12,27 +12,19 @@ import SistemaServicio.SistemaServicio;
  * @author PEDRO VINUEZA
  */
 public class Conductor extends Usuario{
-    private String numeroLicencia;
     private EstadoConductor estado;
     private Vehiculo vehiculo;
 
-    public Conductor(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, int edad, TipoUsuario tipoUsuario, String numeroLicencia, EstadoConductor estado, Vehiculo vehiculo) {
-        super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular, edad, tipoUsuario);
-        this.numeroLicencia = numeroLicencia;
+    public Conductor(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, TipoUsuario tipoUsuario, EstadoConductor estado, Vehiculo vehiculo) {
+        super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular, tipoUsuario);
         this.estado = estado;
         this.vehiculo = vehiculo;
-    }
-    public void setNumeroLicencia(String numeroLicencia){
-        this.numeroLicencia = numeroLicencia;
     }
     public void setEstadoConductor(EstadoConductor estado){
         this.estado = estado;
     }
     public void setVehiculo(Vehiculo vehiculo){
         this.vehiculo = vehiculo;
-    }
-    public String getNumeroLicencia(){
-        return numeroLicencia;
     }
     public EstadoConductor getEstadoConductor(){
         return estado;
@@ -41,26 +33,34 @@ public class Conductor extends Usuario{
         return vehiculo;
     }
     
-    public static Conductor seleccionarConductorDisponible(ArrayList<String> arregloLineas){
-        ArrayList<Usuario> usuarios = SistemaServicio.listaUsuarios();
-        ArrayList<String> linea = ManejoArchivo.LeeFichero("conductor.txt");
-        for(int i=0; i<usuarios.size(); i++){
-            for(int j=0; j<linea.size(); j++){
-                if(i>0){
-                    String [] partes = linea.get(j).split(",");
-                    if (partes[0]==usuarios.get(i).getNumeroCedula()){
-                        Usuario conductor = new Conductor();
-                    }
+    @Override
+    public boolean equals(Object o){
+      if(this == o){
+        return true;
+      }
+      if(o != null && o.getClass() == this.getClass()){
+        Conductor otro = (Conductor) o;
+        return  super.equals(otro) && otro.estado == this.estado && otro.vehiculo.equals(this.vehiculo);
+      }else{
+        return false;
+      }
+    }
+    public static Conductor seleccionarConductorDisponible(ArrayList<Usuario> usuarios){
+        for (Usuario u:usuarios){
+            if (u instanceof Conductor){
+                Conductor c = (Conductor) u;
+                if(c.estado == EstadoConductor.valueOf("D") && c.vehiculo.getTipo() == TipoVehiculo.A){
+                    return c;
                 }
-                
-                
             }
         }
-        for(int i=0; i<arregloLineas.size(); i++){
-            if(i>0){
-                String [] partes = arregloLineas.get(i).split(",");
-                Conductor conductor = new Conductor(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5]]);
-            }
-        } 
+        return null; 
     }
+
+    @Override
+    public void consultarServicio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
 }
+    

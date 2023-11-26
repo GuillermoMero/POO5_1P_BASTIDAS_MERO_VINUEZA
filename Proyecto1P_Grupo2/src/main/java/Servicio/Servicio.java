@@ -6,15 +6,16 @@ package Servicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
 import java.util.Scanner;
+import manejoArchivos.ManejoArchivo;
 /**
  *
  * @author Paula
  */
-public class Servicio {
+public abstract class Servicio {
     protected int numServicio;
     protected TipoServicio tipoServicio;
-    protected String cedulaCliente;
-    protected String nombreConductor;
+    protected Cliente cliente;
+    protected Conductor conductor;
     protected String origen;
     protected String destino;
     protected String fecha;
@@ -25,11 +26,11 @@ public class Servicio {
         
     }
     
-    public Servicio(TipoServicio tipoServicio, String cedulaCliente, String nombreConductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago){
+    public Servicio(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago){
         this.numServicio++;
         this.tipoServicio = tipoServicio;
-        this.cedulaCliente = cedulaCliente;
-        this.nombreConductor = nombreConductor;
+        this.cliente = cliente;
+        this.conductor = conductor;
         this.origen = origen;
         this.destino = destino;
         this.fecha = fecha;
@@ -53,12 +54,12 @@ public class Servicio {
         this.hora = hora;
     }
     
-    public String getCedulaCliente(){
-        return cedulaCliente;
+    public Cliente getCliente(){
+        return cliente;
     }
     
     public void setCliente(Cliente cliente){
-        this.cedulaCliente = cedulaCliente;
+        this.cliente = cliente;
     }
     
     public String getOrigen(){
@@ -77,12 +78,12 @@ public class Servicio {
         this.destino = destino;
     }
     
-    public String getNombreConductor(){
-        return nombreConductor;
+    public Conductor getConductor(){
+        return conductor;
     }
     
     public void setConductor(Conductor conductor){
-        this.nombreConductor = nombreConductor;
+        this.conductor = conductor;
     }
     
     public TipoServicio GetTipoServicio(){
@@ -100,6 +101,21 @@ public class Servicio {
     public void setNumServicio(int numServicio){
         this.numServicio = numServicio;
     }
+
+    public TipoPago getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(TipoPago tipoPago) {
+        this.tipoPago = tipoPago;
+    }
     
+    public abstract double calcularValorPagar(double costo,int distancia);
     
+    public void escribirServicio(){
+        String linea2 = ""+numServicio+","+tipoServicio+","+cliente.getNumeroCedula()+","+conductor.getNombre()+","+origen+","+destino+","+fecha+","+hora;
+            ManejoArchivo.EscribirArchivo("Servicios.txt",linea2);
+    }
 }
+
+

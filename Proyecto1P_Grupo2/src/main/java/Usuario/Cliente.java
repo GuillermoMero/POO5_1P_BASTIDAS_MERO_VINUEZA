@@ -3,15 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Usuario;
-
+import SistemaServicio.SistemaServicio;
+import static SistemaServicio.SistemaServicio.enpaquetar;
+import java.lang.reflect.Array;
+import java.util.Scanner;
+import manejoArchivos.ManejoArchivo;
 /**
  *
  * @author PEDRO VINUEZA
  */
 public class Cliente extends Usuario{
+    private int edad;
     private String numeroTarjeta;
-    public Cliente(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, int edad, TipoUsuario tipoUsuario, String numeroTajerta) {
-        super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular, edad, tipoUsuario);
+    public Cliente(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, TipoUsuario tipoUsuario, int edad, String numeroTajerta) {
+        super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular,tipoUsuario);
         this.numeroTarjeta = numeroTarjeta;
     }
     public void setNumeroTarjeta(String numeroTarjeta){
@@ -19,5 +24,54 @@ public class Cliente extends Usuario{
     }
     public String getNumeroTarjeta(){
         return numeroTarjeta;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    
+    
+    @Override
+    public boolean equals(Object o){
+      if(this == o){
+        return true;
+      }
+      if(o != null && o.getClass() == this.getClass()){
+        Cliente otro = (Cliente) o;
+        return  super.equals(otro);
+      }else{
+        return false;
+      }
+    }
+
+    @Override
+    public void consultarServicio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void llenarDatos(){
+        
+        Scanner sc = new Scanner(System.in);
+        int validar = 0;
+        for (String i:ManejoArchivo.LeeFichero("Clientes.txt")){
+            if(i.split(",")[0].equals(this.numeroCedula)){
+                validar = validar + 1;
+            }
+        }
+        if (validar == 0){
+           System.out.print("Edad: ");
+           edad = sc.nextInt();
+           setEdad(edad);
+           sc.nextLine();
+           System.out.print("Numero de tarjeta de credito: ");
+           numeroTarjeta = sc.nextLine();
+           setNumeroTarjeta(numeroTarjeta);
+           String linea = ""+numeroCedula+","+edad+","+numeroTarjeta;
+           ManejoArchivo.EscribirArchivo("Clientes.txt",linea);
+        }
     }
 }

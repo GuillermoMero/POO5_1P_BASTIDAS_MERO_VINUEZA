@@ -13,8 +13,11 @@ public class Encomienda extends Servicio{
     private TipoEncomienda tipoEncomienda;
     private int cantidadProducto;
     private double peso;
-    public Encomienda(String fecha, String hora, Cliente cliente, String origen, String destino, Conductor conductor, TipoServicio tipoServicio ){
-        super(fecha, hora, cliente, origen, destino, conductor, tipoServicio);
+    public Encomienda(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, TipoEncomienda tipoEncomienda, int cantidadProducto, double peso){
+        super(tipoServicio,cliente,conductor,origen,destino,fecha,hora,tipoPago);
+        this.tipoEncomienda = tipoEncomienda;
+        this.cantidadProducto = cantidadProducto;
+        this.peso = peso;
     }
     public void setTipoEcomienda(TipoEncomienda tipoEncomienda){
         this.tipoEncomienda=tipoEncomienda;
@@ -36,6 +39,11 @@ public class Encomienda extends Servicio{
     }
     public void calcularcosto(){
         
+    }
+
+    @Override
+    public double calcularValorPagar(double costo, int distancia) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

@@ -8,27 +8,24 @@ package Usuario;
  *
  * @author Paula
  */
-public class Usuario {
+public abstract class Usuario {
     protected String numeroCedula;
     protected String nombre;
     protected String apellidos;
     protected String usuario;
     protected String contrasena;
     protected String numeroCelular;
-    protected int edad;
     protected TipoUsuario tipoUsuario;
     
-    public Usuario(String numeroCedula,String nombre, String apellidos, String usuario, String contrasena, String numeroCelular, int edad, TipoUsuario tipoUsuario){
+    public Usuario(String numeroCedula,String nombre, String apellidos, String usuario, String contrasena, String numeroCelular, TipoUsuario tipoUsuario){
         this.numeroCedula=numeroCedula;
         this.nombre=nombre;
         this.apellidos=apellidos;
         this.usuario=usuario;
         this.contrasena=contrasena;
         this.numeroCelular=numeroCelular;
-        this.edad = edad;
         this.tipoUsuario=tipoUsuario;
-    }
-    
+    }   
 
     public String getNumeroCedula() {
         return numeroCedula;
@@ -54,9 +51,6 @@ public class Usuario {
         return numeroCelular;
     }
 
-    public int getEdad() {
-        return edad;
-    }
 
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
@@ -86,18 +80,22 @@ public class Usuario {
         this.numeroCelular = numeroCelular;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
     
-
-    
-    public void consultarServicio(){
-        
+    @Override
+    public boolean equals(Object o){
+      if (o == this){
+        return true;
+      }
+      if (o != null && this.getClass() == o.getClass()){
+        Usuario otro = (Usuario)o;
+        return otro.numeroCedula.equalsIgnoreCase(this.numeroCedula) && otro.nombre.equalsIgnoreCase(this.nombre) && otro.apellidos.equalsIgnoreCase(this.apellidos) && otro.usuario.equalsIgnoreCase(this.usuario) && otro.contrasena.equalsIgnoreCase(this.contrasena) && otro.numeroCelular.equalsIgnoreCase(this.numeroCelular) && String.valueOf(otro.tipoUsuario).equalsIgnoreCase(String.valueOf(this.tipoUsuario));
+      }else{
+        return false;
+      }
     }
     
+    public abstract void consultarServicio();
 }

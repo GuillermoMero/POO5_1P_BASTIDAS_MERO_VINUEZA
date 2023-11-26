@@ -17,15 +17,22 @@ import java.util.Arrays;
  * @author Paula
  */
 public class SistemaServicio{
-    private Scanner sc;
     private static ArrayList<Usuario> usuarios;
-    
+    private static ArrayList<Servicio> servicios;
     public SistemaServicio(){
-        sc = new Scanner(System.in);
-        usuarios = new ArrayList<>();
+        usuarios = crearListaUsuarios();
+        servicios = new ArrayList<>();
+    }
+
+    public static ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+    public static ArrayList<Servicio> getServicios() {
+        return servicios;
     }
     
-    public static ArrayList crearListaUsuarios(){
+    
+    public static ArrayList<Usuario> crearListaUsuarios(){
         ArrayList<Usuario> arreglo = new ArrayList<>();
         ArrayList<String[]> listasUsuarios = new ArrayList<>();
         ArrayList<String[]> listasConductores = new ArrayList<>();
@@ -33,43 +40,28 @@ public class SistemaServicio{
         listasUsuarios= enpaquetar(ManejoArchivo.LeeFichero("usuarios.txt"));
         for(int i=0; i<listasUsuarios.size(); i++){
             if("C".equals(listasUsuarios.get(i)[6])){
-                Usuario usuario = new Cliente(listasUsuarios.get(i)[0],listasUsuarios.get(i)[1],listasUsuarios.get(i)[2],listasUsuarios.get(i)[3],listasUsuarios.get(i)[4],listasUsuarios.get(i)[5],0,TipoUsuario.valueOf(listasUsuarios.get(i)[6]), "");
+                Cliente usuario = new Cliente(listasUsuarios.get(i)[0],listasUsuarios.get(i)[1],listasUsuarios.get(i)[2],listasUsuarios.get(i)[3],listasUsuarios.get(i)[4],listasUsuarios.get(i)[5],TipoUsuario.valueOf(listasUsuarios.get(i)[6]),0, "");
                 arreglo.add(usuario);
             }else{
-                listasConductores = 
-                
-            }
-        }
-        
-        
-        ArrayList<String> linea = ManejoArchivo.LeeFichero("usuarios.txt");
-        for (int i = 0; i<linea.size();i++){
-            if (i > 0){
-                String[] partes = (linea.get(i)).split(",");
-                if("C".equals(partes[6])){
-                    Usuario usuario = new Cliente(partes[0],partes[1],partes[2],partes[3],partes[4],partes[5],0,TipoUsuario.valueOf(partes[6]), "");
-                    arreglo.add(usuario);
-                }else{
-                    listasConductores = enpaquetar(ManejoArchivo.LeeFichero("conductores.txt"));
-                    listasVehiculos = enpaquetar(ManejoArchivo.LeeFichero("vehiculos.txt"));
-                    for(int j=0; j<listasConductores.size(); j++){
-                        for(int k=0; k<listasVehiculos.size(); k++){
-                            if(listasConductores.get(j)[-1].equals(listasVehiculos.get(k)[0])){
-                                Usuario usuario = new Conductor(partes[0],partes[1],partes[2],partes[3],partes[4],partes[5],0,TipoUsuario.valueOf(partes[6]), )
-                            }
+                Conductor usuario = new Conductor(listasUsuarios.get(i)[0],listasUsuarios.get(i)[1],listasUsuarios.get(i)[2],listasUsuarios.get(i)[3],listasUsuarios.get(i)[4],listasUsuarios.get(i)[5],TipoUsuario.valueOf(listasUsuarios.get(i)[6]),null,null);
+                listasConductores = enpaquetar(ManejoArchivo.LeeFichero("conductores.txt"));
+                listasVehiculos = enpaquetar(ManejoArchivo.LeeFichero("vehiculos.txt"));
+                for (int j = 0; j<listasConductores.size(); j++){
+                    if (listasConductores.get(j)[0].equals(usuario.getNumeroCedula())){
+                        usuario.setEstadoConductor(EstadoConductor.valueOf(listasConductores.get(j)[1]));
+                        for (int k = 0; k<listasVehiculos.size(); k++){
+                            if (listasVehiculos.get(k)[0].equals(listasConductores.get(j)[2])){
+                                Vehiculo vehiculo = new Vehiculo(listasVehiculos.get(k)[1],listasVehiculos.get(k)[2],listasVehiculos.get(k)[3],TipoVehiculo.valueOf(listasVehiculos.get(k)[4]));
+                                usuario.setVehiculo(vehiculo);
+                            }           
                         }
                     }
-                    
-                    
-                    
-                    Usuario usuario = new Conductor(partes[0],partes[1],partes[2],partes[3],partes[4],partes[5],0,TipoUsuario.valueOf(partes[6]),"",);
-                    arreglo.add(usuario);
                 }
+                arreglo.add(usuario);
+                
             }
-        return arreglo;
-    }
-        
-   return null;
+        } 
+    return arreglo;
     }
     
     public static ArrayList<String []> enpaquetar(ArrayList<String> arreglo){
@@ -85,10 +77,10 @@ public class SistemaServicio{
      }
     
     
-    public Usuario validarUsuario(ArrayList<Usuario> arreglo, String user, String contrasena){
-        for(int i=0; i<arreglo.size(); i++){
-            if(user.equals(arreglo.get(i).getUsuario()) && contrasena.equals(arreglo.get(i).getContrasena())){
-                return arreglo.get(i);
+    public static Usuario validarUsuario(ArrayList<Usuario> users, String user,String contra){
+        for(int i=0; i<users.size(); i++){
+            if(users.get(i).getUsuario().equals(user) && users.get(i).getContrasena().equals(contra)){
+                return users.get(i);
             }
         }
         return null;
@@ -114,49 +106,47 @@ public class SistemaServicio{
     }
      
     public void iniciar(){
+        Scanner sc = new Scanner(System.in);
         String user;
         String contrasena;
         String opcion;
         Usuario usuario;
         int edad;
+        String tarjetaCredito;
         usuarios = crearListaUsuarios();
         
         
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("            BIENVENIDO AL SISTEMA              ");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.print("USUARIO: ");
-        user = sc.next();
-        System.out.print("CONTRASENA: ");
-        contrasena = sc.next();
-        
-        usuario = validarUsuario(usuarios, user, contrasena);
-        if(usuario.getEdad() == 0){
-            System.out.println("Edad: ");
-            edad = sc.nextInt();
-            usuario.setEdad(edad);
-            
-            if(TipoUsuario.C == usuario.getTipoUsuario()){
-                presentarMenuCliente();
-                System.out.print("Elija una opcion: ");
-                opcion = sc.next();
-                if(opcion.equals("1")){
-                    Taxi taxi = new Taxi();
-                    //taxi.solicitarTaxi(usuario);
-                }
-            }else if(TipoUsuario.R == usuario.getTipoUsuario()){
-                presentarMenuConductor();
-                System.out.print("Elija una opcion: ");
-                opcion = sc.next();
+        Usuario usuarioSistema;
+        do{
+            System.out.print("USUARIO: ");
+            user = sc.next().toLowerCase();
+            System.out.print("CONTRASENA: ");
+            contrasena = sc.next().toLowerCase();
+            usuarioSistema = SistemaServicio.validarUsuario(usuarios, user, contrasena);
+        }while(usuarioSistema == null);
+        if(TipoUsuario.C == usuarioSistema.getTipoUsuario()){
+            Cliente clienteSistema = (Cliente) usuarioSistema;
+            clienteSistema.llenarDatos();
+            presentarMenuCliente();
+            System.out.print("Elija una opcion: ");
+            opcion = sc.next();
+            if(opcion.equals("1")){
+                Taxi taxi = new Taxi();
+                taxi.solicitarTaxi(clienteSistema);
+            }
+        }else if(TipoUsuario.R == usuarioSistema.getTipoUsuario()){
+            presentarMenuConductor();
+            System.out.print("Elija una opcion: ");
+            opcion = sc.next();
         }
             
-        }
-        
-        
-        
-      
     }
+             
 }
+
      
      
      

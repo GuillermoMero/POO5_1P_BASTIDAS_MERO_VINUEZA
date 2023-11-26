@@ -4,6 +4,8 @@
  */
 package Servicio;
 
+import Usuario.TipoVehiculo;
+
 /**
  *
  * @author Paula
@@ -12,9 +14,9 @@ public class Vehiculo {
     private String placa;
     private String modelo;
     private String marca;
-    private char tipo;
+    private TipoVehiculo tipo;
     
-    public Vehiculo(String placa, String modelo, String marca, char tipo){
+    public Vehiculo(String placa, String modelo, String marca, TipoVehiculo tipo){
         this.placa=placa;
         this.modelo=modelo;
         this.marca=marca;
@@ -27,6 +29,14 @@ public class Vehiculo {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public TipoVehiculo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoVehiculo tipo) {
+        this.tipo = tipo;
     }
     
 
@@ -45,14 +55,17 @@ public class Vehiculo {
     public void setMarca(String marca) {
         this.marca = marca;
     }
-
-    public char getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(char tipo) {
-        this.tipo = tipo;
-    }
     
-
+    @Override
+    public boolean equals(Object o){
+      if (o == this){
+        return true;
+      }
+      if (o != null && this.getClass() == o.getClass()){
+        Vehiculo otro = (Vehiculo)o;
+        return otro.placa.equals(this.placa) && otro.modelo.equals(this.modelo) && otro.marca.equals(this.marca) && otro.tipo == this.tipo;
+      }else{
+        return false;
+      }
+    }
 }
