@@ -122,6 +122,12 @@ public class SistemaServicio{
         System.out.println("3. Cerrar sesion");
         System.out.print("\n");
     }
+    
+    public String volverMenu(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("¿Volver al menú? (SI/NO): ");
+        return sc.next();
+    }
     /**
     * Inicia el sistema, permitiendo que los usuarios inicien sesión y accedan a las funcionalidades del sistema.
     */
@@ -135,7 +141,9 @@ public class SistemaServicio{
         String tarjetaCredito;
         usuarios = crearListaUsuarios();
         String continuar = "SI";
+        String cerrar = "SI";
         
+        do{
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("            BIENVENIDO AL SISTEMA              ");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
@@ -162,16 +170,20 @@ public class SistemaServicio{
                     t.solicitarServicio(clienteSistema);
                     System.out.println("\n");
                     System.out.println(t);
+                    continuar = volverMenu();
                 }else if(opcion.equals("2")){
                     Encomienda e = new Encomienda();
                     e.solicitarServicio(clienteSistema);
                     System.out.println("\n");
                     System.out.println(e);
+                    continuar = volverMenu();
                 }else if(opcion.equals("3")){
                     clienteSistema.consultarServicio(servicios);
-                }  
-                System.out.print("¿Volver al menú? (SI/NO): ");
-                continuar = sc.next();
+                    continuar = volverMenu();
+                }else if(opcion.equals("4")){
+                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
+                    cerrar = sc.next();
+                }
                 System.out.println("\n");
             }while(continuar.equals("SI"));
             
@@ -185,12 +197,16 @@ public class SistemaServicio{
                 System.out.println("\n");
                 if(opcion.equals("1")){
                     conductorSistema.consultarServicio(servicios);
+                    continuar = volverMenu();
+                }else if(opcion.equals("3")){
+                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
+                    cerrar = sc.next();
                 }
-                System.out.print("¿Volver al menú? (SI/NO): ");
-                continuar = sc.next();
+                
                 System.out.println("\n");
             }while(continuar.equals("SI"));    
         }
+        }while(cerrar.equals("SI"));
     }
              
 }
