@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Usuario;
-import Servicio.Vehiculo;
+import Servicio.*;
 import manejoArchivos.ManejoArchivo;
 import java.util.ArrayList;
 import SistemaServicio.SistemaServicio;
@@ -58,8 +58,14 @@ public class Conductor extends Usuario{
     }
 
     @Override
-    public void consultarServicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void consultarServicio(ArrayList<Servicio> servicios) {
+        for(int i=0; i<servicios.size();i++){
+            if(servicios.get(i).getConductor().getNombre().equals(getNombre())){
+                System.out.println(servicios.get(i));
+            }else{
+                System.out.println("No tiene asignado algun servicio");
+            }
+        }
     }
     
 }

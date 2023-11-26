@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Usuario;
-import SistemaServicio.SistemaServicio;
-import static SistemaServicio.SistemaServicio.enpaquetar;
-import java.lang.reflect.Array;
+
 import java.util.Scanner;
 import manejoArchivos.ManejoArchivo;
+import Servicio.*;
+import java.util.ArrayList;
 /**
  *
  * @author PEDRO VINUEZA
@@ -49,8 +49,10 @@ public class Cliente extends Usuario{
     }
 
     @Override
-    public void consultarServicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void consultarServicio(ArrayList<Servicio> servicios) {
+        for(int i=0; i<servicios.size();i++){
+            System.out.println(servicios.get(i));
+        }
     }
     
     public void llenarDatos(){

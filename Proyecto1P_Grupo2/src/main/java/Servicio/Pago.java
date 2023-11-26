@@ -21,7 +21,6 @@ public class Pago {
             String linea = ""+idPago+","+t.getFecha()+","+servicio.getNumServicio()+","+t.getTipoPago()+","+t.getCliente().getNumeroCedula()+","+subtotal+","+valorPagar;
             ManejoArchivo.EscribirArchivo("Pagos.txt",linea);
         }
-        
     }
 }
 

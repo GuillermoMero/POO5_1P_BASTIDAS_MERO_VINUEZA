@@ -116,6 +116,9 @@ public abstract class Servicio {
         String linea2 = ""+numServicio+","+tipoServicio+","+cliente.getNumeroCedula()+","+conductor.getNombre()+","+origen+","+destino+","+fecha+","+hora;
             ManejoArchivo.EscribirArchivo("Servicios.txt",linea2);
     }
+    
+    public abstract void solicitarServicio(Cliente cliente);
+    
 }
 
 

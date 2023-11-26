@@ -10,7 +10,6 @@ import manejoArchivos.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Servicio.*;
-import java.util.Arrays;
 
 /**
  *
@@ -93,6 +92,7 @@ public class SistemaServicio{
         System.out.println("1. Solicitar servicio de taxi");
         System.out.println("2. Solicitar entrega encomienda");
         System.out.println("3. Consultar servicios");
+        System.out.println("4. Cerrar sesion");
         System.out.print("\n");
     }
     
@@ -102,6 +102,7 @@ public class SistemaServicio{
         System.out.println("/*********************************************/");
         System.out.println("1. Consultar Servicio Asignado");
         System.out.println("2. Datos de su vehiculo");
+        System.out.println("3. Cerrar sesion");
         System.out.print("\n");
     }
      
@@ -110,16 +111,18 @@ public class SistemaServicio{
         String user;
         String contrasena;
         String opcion;
-        Usuario usuario;
+        Usuario usuarioSistema;
         int edad;
         String tarjetaCredito;
         usuarios = crearListaUsuarios();
+        String continuar = "SI";
+        String cerrar = "SI";
         
-        
+        do{
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("            BIENVENIDO AL SISTEMA              ");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        Usuario usuarioSistema;
+        
         do{
             System.out.print("USUARIO: ");
             user = sc.next().toLowerCase();
@@ -127,22 +130,57 @@ public class SistemaServicio{
             contrasena = sc.next().toLowerCase();
             usuarioSistema = SistemaServicio.validarUsuario(usuarios, user, contrasena);
         }while(usuarioSistema == null);
+        
         if(TipoUsuario.C == usuarioSistema.getTipoUsuario()){
             Cliente clienteSistema = (Cliente) usuarioSistema;
             clienteSistema.llenarDatos();
-            presentarMenuCliente();
-            System.out.print("Elija una opcion: ");
-            opcion = sc.next();
-            if(opcion.equals("1")){
-                Taxi taxi = new Taxi();
-                taxi.solicitarTaxi(clienteSistema);
-            }
-        }else if(TipoUsuario.R == usuarioSistema.getTipoUsuario()){
-            presentarMenuConductor();
-            System.out.print("Elija una opcion: ");
-            opcion = sc.next();
-        }
             
+            do{
+                presentarMenuCliente();
+                System.out.print("Elija una opcion: ");
+                opcion = sc.next();
+                System.out.println("\n");
+                if(opcion.equals("1")){
+                    Taxi t = new Taxi();
+                    t.solicitarServicio(clienteSistema);
+                    System.out.println("\n");
+                    System.out.println(t);
+                }else if(opcion.equals("2")){
+                    Encomienda e = new Encomienda();
+                    e.solicitarServicio(clienteSistema);
+                    System.out.println("\n");
+                    System.out.println(e);
+                }else if(opcion.equals("3")){
+                    clienteSistema.consultarServicio(servicios);
+                }else if(opcion.equals("4")){
+                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO)");
+                    cerrar = sc.next();
+                }   
+                System.out.print("¿Volver al menú? (SI/NO): ");
+                continuar = sc.next();
+                System.out.println("\n");
+            }while(continuar.equals("SI"));
+            
+        }else if(TipoUsuario.R == usuarioSistema.getTipoUsuario()){
+            Conductor conductorSistema = (Conductor)usuarioSistema;
+            
+            do{
+                presentarMenuConductor();
+                System.out.print("Elija una opcion: ");
+                opcion = sc.next();
+                System.out.println("\n");
+                if(opcion.equals("1")){
+                    conductorSistema.consultarServicio(servicios);
+                }else if(opcion.equals("3")){
+                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO)");
+                    cerrar = sc.next();
+                }
+                System.out.print("¿Volver al menú? (SI/NO): ");
+                continuar = sc.next();
+                System.out.println("\n");
+            }while(continuar.equals("SI"));    
+        }
+        }while(cerrar.equals("SI"));
     }
              
 }

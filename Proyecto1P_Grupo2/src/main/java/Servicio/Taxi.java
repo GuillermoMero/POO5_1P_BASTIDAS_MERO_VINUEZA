@@ -18,16 +18,13 @@ import manejoArchivos.ManejoArchivo;
 public class Taxi extends Servicio{
     private int numeroPasajero;
     
-    public Taxi(){
-        
-    }
+    public Taxi(){}
     
     public Taxi(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
         super(TipoServicio.valueOf("T"), cliente, conductor, origen, destino, fecha, hora, tipoPago);
         this.numeroPasajero = numeroPasajero;
     }
     
-
     public int getNumeroPasajero() {
         return numeroPasajero;
     }
@@ -36,14 +33,14 @@ public class Taxi extends Servicio{
         this.numeroPasajero = numeroPasajero;
     }
 
-
-    
-    public void solicitarTaxi(Cliente cliente){
+    @Override
+    public void solicitarServicio(Cliente cliente){
         Random rd = new Random();
         final double COSTO = 0.50;        
         int DISTANCIA = rd.nextInt(5, 46);
         double subtotal = (COSTO*DISTANCIA);
         Scanner sc = new Scanner(System.in); 
+        System.out.println("\n");
         System.out.println("/*************DETALLES DE LA RUTA*************/");  
         System.out.print("Origen: ");
         origen = sc.nextLine();
@@ -51,7 +48,7 @@ public class Taxi extends Servicio{
         destino = sc.nextLine();
         System.out.print("Fecha (dd/mm/aa): ");
         fecha = sc.nextLine();
-        System.out.print("Hora: ");
+        System.out.print("Hora (hh:mm) ");
         hora = sc.nextLine();
         System.out.print("Forma de Pago (TC/E): ");
         String tipo = sc.nextLine();
@@ -69,7 +66,7 @@ public class Taxi extends Servicio{
             ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
             Conductor conductorTaxi = Conductor.seleccionarConductorDisponible(usuarios);
             conductor = conductorTaxi;
-            String linea1 = ""+(ManejoArchivo.LeeFichero("Viajes.txt").size())+","+numeroPasajero+","+DISTANCIA+","+subtotal;
+            String linea1 = "\n"+(ManejoArchivo.LeeFichero("Viajes.txt").size())+","+numeroPasajero+","+DISTANCIA+","+subtotal;
             ManejoArchivo.EscribirArchivo("Viajes.txt",linea1);
             setNumServicio((ManejoArchivo.LeeFichero("Servicios.txt").size()));
             escribirServicio();
@@ -77,7 +74,8 @@ public class Taxi extends Servicio{
             Pago p = new Pago();
             p.escribirPago(this, subtotal, valorPagar);
         }
-    }  
+    }
+    
     @Override
     public double calcularValorPagar(double costo,int distancia) {
         return costo*distancia;
@@ -87,6 +85,11 @@ public class Taxi extends Servicio{
         if (tipoPago == TipoPago.TC)
             return (calcularValorPagar( costo, distancia))*1.15;
         return calcularValorPagar( costo, distancia);
+    }
+    
+    @Override
+    public String toString(){
+        return "/*********************************************/ \nTipo: Viaje \nCantidad pasajeros: "+numeroPasajero+"\nFecha: "+fecha+"\nHora: "+hora+"\nDesde: "+origen+"\nHasta: "+destino+"\n";
     }
     
 }

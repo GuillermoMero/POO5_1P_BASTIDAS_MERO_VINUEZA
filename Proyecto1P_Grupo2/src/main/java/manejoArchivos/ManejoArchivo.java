@@ -60,7 +60,7 @@ public class ManejoArchivo {
         try {
             fichero = new FileWriter(nombreArchivo,true);
             bw = new BufferedWriter(fichero);
-            bw.write(linea+"\n");
+            bw.write(linea);
             //System.out.println("ksdsdlsd");
 
         } catch (Exception e) {

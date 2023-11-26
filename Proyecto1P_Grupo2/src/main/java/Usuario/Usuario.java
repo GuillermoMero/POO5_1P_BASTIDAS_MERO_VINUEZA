@@ -4,6 +4,9 @@
  */
 package Usuario;
 
+import Servicio.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author Paula
@@ -97,5 +100,5 @@ public abstract class Usuario {
       }
     }
     
-    public abstract void consultarServicio();
+    public abstract void consultarServicio(ArrayList<Servicio> servicios);
 }
