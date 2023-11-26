@@ -169,7 +169,7 @@ public class SistemaServicio{
                     System.out.println(e);
                 }else if(opcion.equals("3")){
                     clienteSistema.consultarServicio(servicios);
-                }   
+                }  
                 System.out.print("¿Volver al menú? (SI/NO): ");
                 continuar = sc.next();
                 System.out.println("\n");
