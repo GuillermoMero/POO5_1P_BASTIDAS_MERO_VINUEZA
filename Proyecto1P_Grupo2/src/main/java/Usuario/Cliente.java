@@ -34,7 +34,11 @@ public class Cliente extends Usuario{
         this.edad = edad;
     }
     
-    
+    /**
+    * Compara el Cliente actual con otro objeto para verificar si son iguales.
+    * @param o El objeto a comparar con el Cliente actual.
+    * @return true si los objetos son iguales, false en caso contrario.
+    */
     @Override
     public boolean equals(Object o){
       if(this == o){
@@ -47,14 +51,20 @@ public class Cliente extends Usuario{
         return false;
       }
     }
-
+    /**
+    * Consulta y muestra en la consola los detalles de los servicios.
+    * @param servicios La lista de servicios a consultar y mostrar.
+    */
     @Override
     public void consultarServicio(ArrayList<Servicio> servicios) {
         for(int i=0; i<servicios.size();i++){
             System.out.println(servicios.get(i));
         }
     }
-    
+    /**
+    * Llena los datos adicionales del cliente como edad y número de tarjeta de crédito.
+    * Si el cliente no existe en el archivo de clientes, solicita y guarda su información.
+    */
     public void llenarDatos(){
         
         Scanner sc = new Scanner(System.in);

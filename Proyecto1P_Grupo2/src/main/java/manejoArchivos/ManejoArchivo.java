@@ -13,6 +13,12 @@ import java.util.ArrayList;
  * @author LENOVO
  */
 public class ManejoArchivo {
+    /**
+     * Lee el contenido de un archivo de texto línea por línea y lo almacena en un ArrayList.
+     * 
+     * @param nombrearchivo Nombre del archivo que se va a leer.
+     * @return Un ArrayList que contiene las líneas leídas del archivo.
+     */
     public static ArrayList<String> LeeFichero(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
@@ -51,7 +57,13 @@ public class ManejoArchivo {
         return lineas;
 
     }
-
+    
+    /**
+     * Escribe una línea en un archivo de texto.
+     * 
+     * @param nombreArchivo Nombre del archivo en el que se va a escribir la línea.
+     * @param linea La cadena que se escribirá en el archivo.
+     */
     public static void EscribirArchivo(String nombreArchivo, String linea) {
 
         FileWriter fichero = null;

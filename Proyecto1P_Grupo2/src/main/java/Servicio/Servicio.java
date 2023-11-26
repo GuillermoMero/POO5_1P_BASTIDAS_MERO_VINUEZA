@@ -109,14 +109,31 @@ public abstract class Servicio {
     public void setTipoPago(TipoPago tipoPago) {
         this.tipoPago = tipoPago;
     }
-    
+     /**
+     * Calcula el valor a pagar por el servicio basado en el costo y la distancia.
+     * Este método debe ser implementado por las subclases concretas.
+     * 
+     * @param costo El costo por unidad de distancia.
+     * @param distancia La distancia recorrida o medida del servicio.
+     * @return El valor total a pagar por el servicio.
+     */
     public abstract double calcularValorPagar(double costo,int distancia);
-    
+    /**
+     * Escribe los detalles del servicio en un archivo.
+     * Los detalles incluyen información como el número de servicio, tipo, cliente, conductor, origen, destino, fecha y hora.
+     * 
+     * Este método se utiliza para almacenar los detalles generales del servicio en un archivo de registro.
+     */    
     public void escribirServicio(){
         String linea2 = ""+numServicio+","+tipoServicio+","+cliente.getNumeroCedula()+","+conductor.getNombre()+","+origen+","+destino+","+fecha+","+hora;
             ManejoArchivo.EscribirArchivo("Servicios.txt",linea2);
     }
-    
+    /**
+     * Solicita un servicio concreto.
+     * Este método debe ser implementado por las subclases concretas para definir cómo se solicita un servicio específico.
+     * 
+     * @param cliente El cliente que solicita el servicio.
+     */
     public abstract void solicitarServicio(Cliente cliente);
     
 }

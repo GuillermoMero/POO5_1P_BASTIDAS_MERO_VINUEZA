@@ -30,7 +30,10 @@ public class SistemaServicio{
         return servicios;
     }
     
-    
+    /**
+    * Crea una lista de usuarios a partir de la lectura de archivos de usuarios, conductores y vehículos.
+    * @return ArrayList de usuarios con la información obtenida de los archivos.
+    */
     public static ArrayList<Usuario> crearListaUsuarios(){
         ArrayList<Usuario> arreglo = new ArrayList<>();
         ArrayList<String[]> listasUsuarios = new ArrayList<>();
@@ -62,7 +65,11 @@ public class SistemaServicio{
         } 
     return arreglo;
     }
-    
+    /**
+    * Convierte una lista de cadenas en un ArrayList de arreglos de cadenas.
+    * @param arreglo La lista de cadenas a ser convertida.
+    * @return ArrayList de arreglos de cadenas obtenidos de la lista de cadenas.
+    */
     public static ArrayList<String []> enpaquetar(ArrayList<String> arreglo){
         ArrayList<String []> lista = new ArrayList<>();
         for(int i=0; i<arreglo.size(); i++){
@@ -75,7 +82,13 @@ public class SistemaServicio{
         return lista;
      }
     
-    
+    /**
+    * Valida y autentica al usuario basándose en el nombre de usuario y la contraseña proporcionados.
+    * @param users La lista de usuarios a ser validada.
+    * @param user El nombre de usuario a ser validado.
+    * @param contra La contraseña asociada al usuario.
+    * @return El objeto Usuario si la validación es exitosa, de lo contrario, null.
+    */
     public static Usuario validarUsuario(ArrayList<Usuario> users, String user,String contra){
         for(int i=0; i<users.size(); i++){
             if(users.get(i).getUsuario().equals(user) && users.get(i).getContrasena().equals(contra)){
@@ -84,7 +97,9 @@ public class SistemaServicio{
         }
         return null;
     }
-    
+    /**
+    * Presenta el menú para un cliente en la consola.
+    */
     public void presentarMenuCliente(){
         System.out.println("/*******************MENU**********************/");
         System.out.println("/*                                           */");
@@ -95,7 +110,9 @@ public class SistemaServicio{
         System.out.println("4. Cerrar sesion");
         System.out.print("\n");
     }
-    
+    /**
+    * Presenta el menú para un conductor en la consola.
+    */
     public void presentarMenuConductor(){
         System.out.println("/**************MENU CONDUCTOR*****************/");
         System.out.println("/*                                           */");
@@ -105,7 +122,9 @@ public class SistemaServicio{
         System.out.println("3. Cerrar sesion");
         System.out.print("\n");
     }
-     
+    /**
+    * Inicia el sistema, permitiendo que los usuarios inicien sesión y accedan a las funcionalidades del sistema.
+    */
     public void iniciar(){
         Scanner sc = new Scanner(System.in);
         String user;

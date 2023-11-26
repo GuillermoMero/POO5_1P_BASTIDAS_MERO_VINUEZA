@@ -32,7 +32,12 @@ public class Taxi extends Servicio{
     public void setNumeroPasajero(int numeroPasajero) {
         this.numeroPasajero = numeroPasajero;
     }
-
+    /**
+     * Método para solicitar el servicio de taxi.
+     * Solicita detalles de la ruta y realiza cálculos para el valor a pagar.
+     * Posteriormente, escribe la información del servicio en archivos.
+     * @param cliente El cliente que solicita el servicio.
+     */
     @Override
     public void solicitarServicio(Cliente cliente){
         Random rd = new Random();
@@ -75,12 +80,24 @@ public class Taxi extends Servicio{
             p.escribirPago(this, subtotal, valorPagar);
         }
     }
-    
+    /**
+     * Calcula el valor a pagar para el servicio de taxi basado en costo y distancia.
+     * @param costo El costo por distancia.
+     * @param distancia La distancia recorrida.
+     * @return El valor a pagar por el servicio.
+     */
     @Override
     public double calcularValorPagar(double costo,int distancia) {
         return costo*distancia;
     }
-    
+     /**
+     * Calcula el valor a pagar para el servicio de taxi con un tipo de pago específico.
+     * Aplica un incremento si el pago se realiza con tarjeta de crédito.
+     * @param costo El costo por distancia.
+     * @param distancia La distancia recorrida.
+     * @param tipoPago El tipo de pago (TC o E).
+     * @return El valor a pagar por el servicio con el tipo de pago aplicado.
+     */
     public double calcularValorPagar(double costo,int distancia,TipoPago tipoPago){
         if (tipoPago == TipoPago.TC)
             return (calcularValorPagar( costo, distancia))*1.15;

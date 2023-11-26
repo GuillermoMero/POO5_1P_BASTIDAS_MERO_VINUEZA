@@ -12,6 +12,13 @@ import java.util.Date;
  * @author LENOVO
  */
 public class TrabajoConArchivos {
+     /**
+     * Método principal que prueba las funcionalidades de escritura y lectura de archivos.
+     * Escribe cadenas en un archivo y lee contenido desde otro archivo.
+     * También imprime la fecha actual.
+     * 
+     * @param arg Argumentos de línea de comandos (no se utilizan).
+     */
     public static void main(String[] arg) {
         ManejoArchivo.EscribirArchivo("archivosalida.txt","Hola!");
         ManejoArchivo.EscribirArchivo("archivosalida.txt","Afios!");

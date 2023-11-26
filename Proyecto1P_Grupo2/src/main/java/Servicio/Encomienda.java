@@ -43,21 +43,37 @@ public class Encomienda extends Servicio{
     public double getpeso(){
         return peso;
     }
+/**
+ * Calcula el costo del servicio de encomienda.
+ */
     public void calcularcosto(){
         
     }
-
+/**
+ * Calcula el valor a pagar para el servicio de encomienda.
+ * @param costo El costo del servicio.
+ * @param distancia La distancia del servicio.
+ * @return El valor a pagar.
+ */
     @Override
     public double calcularValorPagar(double costo, int distancia) {
         return 0.0;
     }
-    
+/**
+ * Calcula el valor a pagar para el servicio de encomienda con un subtotal y tipo de pago.
+ * @param subtotal El subtotal del valor a pagar.
+ * @param tipoPago El tipo de pago (TC o E).
+ * @return El valor a pagar calculado.
+ */
     public double calcularValorPagar(double subtotal, TipoPago tipoPago){
         if(tipoPago == tipoPago.TC)
             return subtotal*1.15;
         return subtotal;
     }
-    
+/**
+ * Solicita el servicio de encomienda para un cliente.
+ * @param cliente El cliente que solicita el servicio.
+ */
     @Override
     public void solicitarServicio(Cliente cliente){
         Scanner sc = new Scanner(System.in);

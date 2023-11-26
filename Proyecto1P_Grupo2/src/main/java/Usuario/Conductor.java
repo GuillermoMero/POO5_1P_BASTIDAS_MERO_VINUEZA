@@ -32,7 +32,11 @@ public class Conductor extends Usuario{
     public Vehiculo getVehiculo(){
         return vehiculo;
     }
-    
+    /**
+    * Compara el Conductor actual con otro objeto para verificar si son iguales.
+    * @param o El objeto a comparar con el Conductor actual.
+    * @return true si los objetos son iguales, false en caso contrario.
+    */
     @Override
     public boolean equals(Object o){
       if(this == o){
@@ -45,6 +49,11 @@ public class Conductor extends Usuario{
         return false;
       }
     }
+    /**
+    * Busca y devuelve un conductor disponible del conjunto de usuarios.
+    * @param usuarios La lista de usuarios entre los cuales se busca al conductor disponible.
+    * @return El conductor disponible, o null si no se encuentra ninguno.
+    */
     public static Conductor seleccionarConductorDisponible(ArrayList<Usuario> usuarios){
         for (Usuario u:usuarios){
             if (u instanceof Conductor){
@@ -56,7 +65,10 @@ public class Conductor extends Usuario{
         }
         return null; 
     }
-
+    /**
+     * Consulta y muestra en la consola los detalles de los servicios asignados al conductor.
+    * @param servicios La lista de servicios a consultar y mostrar.
+    */
     @Override
     public void consultarServicio(ArrayList<Servicio> servicios) {
         for(int i=0; i<servicios.size();i++){

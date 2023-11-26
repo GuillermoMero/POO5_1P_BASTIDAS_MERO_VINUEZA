@@ -86,7 +86,12 @@ public abstract class Usuario {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+    /**
+    * Compara este objeto con otro objeto para determinar su igualdad.
+    *
+    * @param o El objeto a comparar con este.
+    * @return true si los objetos son iguales, false de lo contrario.
+     */
     @Override
     public boolean equals(Object o){
       if (o == this){
@@ -99,6 +104,10 @@ public abstract class Usuario {
         return false;
       }
     }
-    
+    /**
+    * Método abstracto para consultar servicios relacionados con este usuario.
+    *
+    * @param servicios La lista de servicios a consultar.
+    */
     public abstract void consultarServicio(ArrayList<Servicio> servicios);
 }

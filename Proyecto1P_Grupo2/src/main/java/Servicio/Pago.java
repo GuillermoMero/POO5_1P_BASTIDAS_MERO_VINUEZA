@@ -12,7 +12,12 @@ import manejoArchivos.ManejoArchivo;
  */
 public class Pago {
     private int idPago;
-    
+     /**
+     * Escribe la información del pago en un archivo de texto.
+     * @param servicio El servicio del cual se realiza el pago.
+     * @param subtotal El subtotal del pago.
+     * @param valorPagar El valor total a pagar.
+     */
     public void escribirPago(Servicio servicio, double subtotal, double valorPagar){
         if (servicio instanceof Taxi){
             Pago p = new Pago();

@@ -55,7 +55,13 @@ public class Vehiculo {
     public void setMarca(String marca) {
         this.marca = marca;
     }
-    
+    /**
+    * Sobrescribe el método equals para comparar si dos objetos Vehiculo son iguales.
+    * Dos vehículos son considerados iguales si tienen la misma placa, modelo, marca y tipo.
+    * 
+    * @param o Objeto a ser comparado con el Vehiculo actual.
+    * @return true si el objeto pasado es igual al Vehiculo actual, false en caso contrario.
+    */
     @Override
     public boolean equals(Object o){
       if (o == this){
