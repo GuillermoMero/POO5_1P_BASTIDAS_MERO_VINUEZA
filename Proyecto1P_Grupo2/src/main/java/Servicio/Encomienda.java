@@ -74,7 +74,7 @@ public class Encomienda extends Servicio{
  * Solicita el servicio de encomienda para un cliente.
  * @param cliente El cliente que solicita el servicio.
  */
-    @Override
+    @Override 
     public void solicitarServicio(Cliente cliente){
         Scanner sc = new Scanner(System.in);
         System.out.println("/*************DETALLES DE LA RUTA*************/");

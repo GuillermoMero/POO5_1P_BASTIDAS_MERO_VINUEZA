@@ -183,6 +183,7 @@ public class SistemaServicio{
                 }else if(opcion.equals("4")){
                     System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
                     cerrar = sc.next();
+                    continuar = "NO";
                 }
                 System.out.println("\n");
             }while(continuar.equals("SI"));
@@ -201,6 +202,7 @@ public class SistemaServicio{
                 }else if(opcion.equals("3")){
                     System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
                     cerrar = sc.next();
+                    continuar = "NO";
                 }
                 
                 System.out.println("\n");

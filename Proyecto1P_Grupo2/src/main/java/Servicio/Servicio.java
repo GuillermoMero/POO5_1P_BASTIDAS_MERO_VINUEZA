@@ -5,7 +5,6 @@
 package Servicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
-import java.util.Scanner;
 import manejoArchivos.ManejoArchivo;
 /**
  *
