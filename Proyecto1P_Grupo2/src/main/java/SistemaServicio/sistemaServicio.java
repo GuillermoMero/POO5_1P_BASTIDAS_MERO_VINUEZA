@@ -122,7 +122,10 @@ public class SistemaServicio{
         System.out.println("3. Cerrar sesion");
         System.out.print("\n");
     }
-    
+    /**
+     * Pregunta si el usuario desea volver al menu
+     * @return la elección que ingresa el usuario SI o NO
+     */
     public String volverMenu(){
         Scanner sc = new Scanner(System.in);
         String eleccion;
@@ -146,8 +149,6 @@ public class SistemaServicio{
         String contrasena;
         String opcion;
         Usuario usuarioSistema;
-        int edad;
-        String tarjetaCredito;
         usuarios = crearListaUsuarios();
         String continuar = "SI";
         String cerrar = "SI";
@@ -157,6 +158,9 @@ public class SistemaServicio{
         System.out.println("            BIENVENIDO AL SISTEMA              ");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         
+        /**
+         * Bucle de iniciar sesion para verificar si el usuario ingresado sea correcto y esté en el archivo usuarios.txt
+         */
         do{
             System.out.print("USUARIO: ");
             user = sc.nextLine();
@@ -168,6 +172,9 @@ public class SistemaServicio{
             }
         }while(usuarioSistema == null);
         
+        /**
+         * Validacion de si el usuario ingresado es de tipo Cliente(C) o Conductor (R)
+         */
         if(TipoUsuario.C == usuarioSistema.getTipoUsuario()){
             Cliente clienteSistema = (Cliente) usuarioSistema;
             clienteSistema.llenarDatos();
@@ -238,21 +245,32 @@ public class SistemaServicio{
             cerrar = cerrarSistema(continuar,cerrar);
         }while(cerrar.equals("SI"));
     }
-    
-  public static String cerrarSistema(String continuar, String cerrar){
-      Scanner sc = new Scanner(System.in);
-      boolean validacion;
-        do{
-            System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
-            cerrar = sc.nextLine().toUpperCase();
-            validacion = cerrar.equals("SI") || cerrar.equals("NO");
-            if (validacion == false){
-                System.out.println("ERROR, INGRESE UNA OPCION VALIDA, PUEDE INGRESAR 'SI' O 'NO'!!!\n");
-            }
-        }while(!validacion);
-        return cerrar;
+  
+    /**
+     * Este método pregunta al usuario si desea cerrar sesión para cambiar de cuenta.
+     * @param continuar variable que se le asignara el valor de SI o NO, sirve para mantener la sesión con el usuario actual
+     * @param cerrar determinara si el sesión actual se cierra o se mantiene.
+     * @return 
+     */
+    public static String cerrarSistema(String continuar, String cerrar){
+        Scanner sc = new Scanner(System.in);
+        boolean validacion;
+            do{
+                System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
+                cerrar = sc.nextLine().toUpperCase();
+                validacion = cerrar.equals("SI") || cerrar.equals("NO");
+                if (validacion == false){
+                    System.out.println("ERROR, INGRESE UNA OPCION VALIDA, PUEDE INGRESAR 'SI' O 'NO'!!!\n");
+                }
+            }while(!validacion);
+            return cerrar;
   }  
-  public static String validarTipoDato(String cadena) {
+    /**
+     * Método creado para las validaciones de los datos ingresados por la clase Scanner
+     * @param cadena
+     * @return 
+     */
+    public static String validarTipoDato(String cadena) {
       try {
           Integer.parseInt(cadena);
           return "entero";

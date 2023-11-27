@@ -75,6 +75,10 @@ public class Vehiculo {
       }
     }
 
+    /**
+     * Presentará la informacion del vehiculo del usuario que pregunte.
+     * @return Una cadena con las datos del vehiculo
+     */
     @Override
     public String toString() {
         return "\nPlaca=" + placa + "\nModelo=" + modelo + "\nMarca=" + marca + "\nTipo=" + tipo+"\n";

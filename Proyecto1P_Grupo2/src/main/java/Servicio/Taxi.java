@@ -118,6 +118,10 @@ public class Taxi extends Servicio{
         }       
     }
     
+    /**
+     * Presenta por pantala la informacion del Servicio de taxi solicitado
+     * @return Los datos del Servicio de Taxi
+     */
     @Override
     public String toString(){
         return "/*********************************************/ \nTipo: Viaje \nCantidad pasajeros: "+numeroPasajero+"\nFecha: "+fecha+"\nHora: "+hora+"\nDesde: "+origen+"\nHasta: "+destino+"\n";

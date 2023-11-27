@@ -141,6 +141,10 @@ public class Encomienda extends Servicio{
         }
     }
     
+    /**
+     * Presenta por pantalla los datos del Servicio de entrega de encomiendas solicitado.
+     * @return Los datos del Servicio.
+     */
     @Override
     public String toString(){
         return "/*********************************************/ \nTipo: Encomienda \nTipo encomienda: "+String.valueOf(tipoEncomienda)+"\nCantidad: "+cantidadProducto+"\nFecha: "+fecha
