@@ -125,8 +125,17 @@ public class SistemaServicio{
     
     public String volverMenu(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("¿Volver al menú? (SI/NO): ");
-        return sc.next();
+        String eleccion;
+        boolean condicion;
+        do{
+            System.out.print("¿Volver al menú? (SI/NO): ");
+            eleccion = sc.nextLine().toUpperCase();
+            condicion = eleccion.equals("SI") || eleccion.equals("NO");
+            if (condicion == false){
+                System.out.println("ERROR, INGRESE UNA OPCION VALIDA, PUEDE INGRESAR 'SI' O 'NO'!!!\n");
+            }
+        }while(!(eleccion.equals("SI") || eleccion.equals("NO")));
+        return eleccion;
     }
     /**
     * Inicia el sistema, permitiendo que los usuarios inicien sesión y accedan a las funcionalidades del sistema.
@@ -150,10 +159,13 @@ public class SistemaServicio{
         
         do{
             System.out.print("USUARIO: ");
-            user = sc.next().toLowerCase();
+            user = sc.nextLine();
             System.out.print("CONTRASENA: ");
-            contrasena = sc.next().toLowerCase();
+            contrasena = sc.nextLine();
             usuarioSistema = SistemaServicio.validarUsuario(usuarios, user, contrasena);
+            if (usuarioSistema == null){
+                System.out.println("ERROR, INGRESE UN USUARIO Y CONTRASEÑA QUE SE ENCUENTREN EN LA BASE DE DATOS!!!\n");
+            }
         }while(usuarioSistema == null);
         
         if(TipoUsuario.C == usuarioSistema.getTipoUsuario()){
@@ -162,55 +174,101 @@ public class SistemaServicio{
             
             do{
                 presentarMenuCliente();
-                System.out.print("Elija una opcion: ");
-                opcion = sc.next();
+                boolean condicion;
+                do{
+                    System.out.print("Elija una opcion: ");
+                    opcion = sc.nextLine();
+                    condicion = opcion.equals("1") || opcion.equals("2") || opcion.equals("3") || opcion.equals("4");
+                    if (condicion == false){
+                        System.out.println("ERROR, INGRESE UNA OPCION VALIDA, ESTAS VAN DEL 1 AL 4!!!\n");
+                    }
+                }while(!condicion);
                 System.out.println("\n");
                 if(opcion.equals("1")){
                     Taxi t = new Taxi();
                     t.solicitarServicio(clienteSistema);
                     System.out.println("\n");
-                    System.out.println(t);
                     continuar = volverMenu();
                 }else if(opcion.equals("2")){
                     Encomienda e = new Encomienda();
                     e.solicitarServicio(clienteSistema);
                     System.out.println("\n");
-                    System.out.println(e);
                     continuar = volverMenu();
                 }else if(opcion.equals("3")){
                     clienteSistema.consultarServicio(servicios);
                     continuar = volverMenu();
                 }else if(opcion.equals("4")){
-                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
-                    cerrar = sc.next();
+                    cerrar = cerrarSistema(continuar,cerrar);
                     continuar = "NO";
                 }
                 System.out.println("\n");
             }while(continuar.equals("SI"));
-            
+            if (cerrar.equals("SI"))
+                cerrar = cerrarSistema(continuar,cerrar);
         }else if(TipoUsuario.R == usuarioSistema.getTipoUsuario()){
             Conductor conductorSistema = (Conductor)usuarioSistema;
             
             do{
                 presentarMenuConductor();
-                System.out.print("Elija una opcion: ");
-                opcion = sc.next();
+                boolean condicion;
+                do{
+                    System.out.print("Elija una opcion: ");
+                    opcion = sc.nextLine();
+                    condicion = opcion.equals("1") || opcion.equals("2") || opcion.equals("3");
+                    if (condicion == false){
+                        System.out.println("ERROR, INGRESE UNA OPCION VALIDA, ESTAS VAN DEL 1 AL 3!!!\n");
+                    }
+                }while(!condicion);
                 System.out.println("\n");
                 if(opcion.equals("1")){
                     conductorSistema.consultarServicio(servicios);
                     continuar = volverMenu();
+                }else if(opcion.equals("2")){
+                    System.out.println("/*********************************************/ \nVEHICULO DEL CONDUCTOR: "+conductorSistema.getNombre()+" "+conductorSistema.getApellidos());
+                    System.out.println(conductorSistema.getVehiculo().toString());
+                    continuar = volverMenu();
                 }else if(opcion.equals("3")){
-                    System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
-                    cerrar = sc.next();
+                    cerrar = cerrarSistema(continuar,cerrar);
                     continuar = "NO";
                 }
-                
                 System.out.println("\n");
-            }while(continuar.equals("SI"));    
+            }while(continuar.equals("SI"));
         }
+        if (cerrar.equals("SI"))
+            cerrar = cerrarSistema(continuar,cerrar);
         }while(cerrar.equals("SI"));
     }
-             
+    
+  public static String cerrarSistema(String continuar, String cerrar){
+      Scanner sc = new Scanner(System.in);
+      boolean validacion;
+        do{
+            System.out.print("¿Desea ingresar con otro usuario? (SI/NO): ");
+            cerrar = sc.nextLine().toUpperCase();
+            validacion = cerrar.equals("SI") || cerrar.equals("NO");
+            if (validacion == false){
+                System.out.println("ERROR, INGRESE UNA OPCION VALIDA, PUEDE INGRESAR 'SI' O 'NO'!!!\n");
+            }
+        }while(!validacion);
+        return cerrar;
+  }  
+  public static String validarTipoDato(String cadena) {
+      try {
+          Integer.parseInt(cadena);
+          return "entero";
+      } catch (NumberFormatException e1) {
+          try {
+              Double.parseDouble(cadena);
+              return "double";
+          } catch (NumberFormatException e2) {
+              if (cadena.length() == 1) {
+                  return "caracter";
+              } else {
+                  return "No válido";
+              }
+          }
+      }
+  }
 }
 
      

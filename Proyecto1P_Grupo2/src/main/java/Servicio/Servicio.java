@@ -5,6 +5,7 @@
 package Servicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
+import java.util.Scanner;
 import manejoArchivos.ManejoArchivo;
 /**
  *
@@ -124,7 +125,7 @@ public abstract class Servicio {
      * Este método se utiliza para almacenar los detalles generales del servicio en un archivo de registro.
      */    
     public void escribirServicio(){
-        String linea2 = ""+numServicio+","+tipoServicio+","+cliente.getNumeroCedula()+","+conductor.getNombre()+","+origen+","+destino+","+fecha+","+hora;
+        String linea2 = "\n"+numServicio+","+tipoServicio+","+cliente.getNumeroCedula()+","+conductor.getNombre()+","+origen+","+destino+","+fecha+","+hora;
             ManejoArchivo.EscribirArchivo("Servicios.txt",linea2);
     }
     /**
@@ -133,7 +134,29 @@ public abstract class Servicio {
      * 
      * @param cliente El cliente que solicita el servicio.
      */
-    public abstract void solicitarServicio(Cliente cliente);
+    public void solicitarServicio(Cliente cliente){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("/*************DETALLES DE LA RUTA*************/");
+        System.out.print("Origen: ");
+        origen = sc.nextLine();
+        System.out.print("Destino: ");
+        destino = sc.nextLine();
+        System.out.print("Fecha (dd/mm/aa): ");
+        fecha = sc.nextLine();
+        System.out.print("Hora (hh:mm): ");
+        hora = sc.nextLine();
+        boolean validacion;
+        String tipo;
+        do{
+            System.out.print("Forma de Pago (TC/E): ");
+            tipo = sc.nextLine().toUpperCase();
+            validacion = tipo.equals("TC") || tipo.equals("E");
+            if (validacion == false){
+                System.out.println("ERROR, INGRESE UNA OPCION VALIDA 'TC' O 'E'!!!\n");
+            }
+        }while(!validacion);
+        tipoPago = TipoPago.valueOf(tipo);
+    }
     
 }
 

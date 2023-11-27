@@ -65,6 +65,17 @@ public class Conductor extends Usuario{
         }
         return null; 
     }
+    public static Conductor seleccionarConductorDisponibleM(ArrayList<Usuario> usuarios){
+        for (Usuario u:usuarios){
+            if (u instanceof Conductor){
+                Conductor c = (Conductor) u;
+                if(c.estado == EstadoConductor.valueOf("D") && c.vehiculo.getTipo() == TipoVehiculo.M){
+                    return c;
+                }
+            }
+        }
+        return null; 
+    }
     /**
      * Consulta y muestra en la consola los detalles de los servicios asignados al conductor.
     * @param servicios La lista de servicios a consultar y mostrar.

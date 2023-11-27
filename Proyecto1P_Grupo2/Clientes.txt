@@ -1,3 +1,1 @@
-cedula,edad,numerotarjeta0923547362,23,123456
-
-0923547362,13,099999999
+cedula,edad,numerotarjeta

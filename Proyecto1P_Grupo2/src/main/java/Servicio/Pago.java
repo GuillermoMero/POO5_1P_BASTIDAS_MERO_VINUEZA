@@ -18,14 +18,12 @@ public class Pago {
      * @param subtotal El subtotal del pago.
      * @param valorPagar El valor total a pagar.
      */
-    public void escribirPago(Servicio servicio, double subtotal, double valorPagar){
-        if (servicio instanceof Taxi taxi){
-            Pago p = new Pago();
-            Taxi t = taxi;
-            idPago = t.getNumServicio();
-            String linea = ""+idPago+","+t.getFecha()+","+servicio.getNumServicio()+","+t.getTipoPago()+","+t.getCliente().getNumeroCedula()+","+subtotal+","+valorPagar;
-            ManejoArchivo.EscribirArchivo("Pagos.txt",linea);
-        }
+    public void escribirPago(Servicio t, double subtotal, double valorPagar){
+        Pago p = new Pago();
+        idPago = t.getNumServicio();
+        String linea = "\n"+idPago+","+t.getFecha()+","+t.getNumServicio()+","+t.getTipoPago()+","+t.getCliente().getNumeroCedula()+","+subtotal+","+valorPagar;
+        ManejoArchivo.EscribirArchivo("Pagos.txt",linea);
+       
     }
 }
 

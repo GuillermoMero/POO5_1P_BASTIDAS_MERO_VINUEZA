@@ -1,5 +1,1 @@
 numeroServicio,tipoEncomienda,cantidadProductos,peso,subtotal
-
-1,MEDICAMENTOS,2,2.0,6.0
-3,DOCUMENTOS,3,3.0,7.0
-4,DOCUMENTOS,2,3.0,6.0

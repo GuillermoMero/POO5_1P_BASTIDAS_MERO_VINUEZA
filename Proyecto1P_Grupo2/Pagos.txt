@@ -1,1 +1,1 @@
-idPago,FechaPago,numeroServicio,formaPago,cedulaCliente,subtotal,valorPagar1,12/13/2022,1,TC,0923547362,9.0,10.351,12/12/23,1,TC,0923547362,12.5,14.3749999999999981,12/03/23,1,TC,0923547362,21.0,24.151,23/12/23,1,E,0923547362,9.0,9.01,12/05/23,1,TC,0923547362,7.0,8.049999999999999
+idPago,FechaPago,numeroServicio,formaPago,cedulaCliente,subtotal,valorPagar

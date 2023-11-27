@@ -74,4 +74,9 @@ public class Vehiculo {
         return false;
       }
     }
+
+    @Override
+    public String toString() {
+        return "\nPlaca=" + placa + "\nModelo=" + modelo + "\nMarca=" + marca + "\nTipo=" + tipo+"\n";
+    }
 }

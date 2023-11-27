@@ -7,6 +7,7 @@ package Usuario;
 import java.util.Scanner;
 import manejoArchivos.ManejoArchivo;
 import Servicio.*;
+import SistemaServicio.SistemaServicio;
 import java.util.ArrayList;
 /**
  *
@@ -75,14 +76,21 @@ public class Cliente extends Usuario{
             }
         }
         if (validar == 0){
-           System.out.print("Edad: ");
-           edad = sc.nextInt();
-           setEdad(edad);
-           sc.nextLine();
+           boolean condicion;
+           String cedad;
+           do{
+                System.out.print("Edad: ");
+                cedad = sc.nextLine();
+                condicion = SistemaServicio.validarTipoDato(cedad).equals("entero") ;
+                if(condicion == false){
+                    System.out.println("ERROR, INGRESE UN NUMERO ENTERO!!!\n");
+                }
+           }while(!condicion);
+           edad = Integer.parseInt(cedad);
            System.out.print("Numero de tarjeta de credito: ");
            numeroTarjeta = sc.nextLine();
            setNumeroTarjeta(numeroTarjeta);
-           String linea = ""+numeroCedula+","+edad+","+numeroTarjeta;
+           String linea = "\n"+numeroCedula+","+edad+","+numeroTarjeta;
            ManejoArchivo.EscribirArchivo("Clientes.txt",linea);
         }
     }

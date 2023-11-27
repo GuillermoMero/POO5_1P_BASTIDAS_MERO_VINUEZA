@@ -7,6 +7,7 @@ import SistemaServicio.SistemaServicio;
 import Usuario.Cliente;
 import Usuario.Conductor;
 import Usuario.Usuario;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -40,32 +41,36 @@ public class Taxi extends Servicio{
      */
     @Override
     public void solicitarServicio(Cliente cliente){
+        Scanner sc = new Scanner(System.in);
         Random rd = new Random();
         final double COSTO = 0.50;        
         int DISTANCIA = rd.nextInt(5, 46);
-        double subtotal = (COSTO*DISTANCIA);
-        Scanner sc = new Scanner(System.in); 
-        System.out.println("\n");
-        System.out.println("/*************DETALLES DE LA RUTA*************/");  
-        System.out.print("Origen: ");
-        origen = sc.nextLine();
-        System.out.print("Destino: ");
-        destino = sc.nextLine();
-        System.out.print("Fecha (dd/mm/aa): ");
-        fecha = sc.nextLine();
-        System.out.print("Hora (hh:mm) ");
-        hora = sc.nextLine();
-        System.out.print("Forma de Pago (TC/E): ");
-        String tipo = sc.nextLine();
-        tipoPago = TipoPago.valueOf(tipo);
-        System.out.print("Numero de pasajeros: ");
-        numeroPasajero = sc.nextInt();
-        sc.nextLine();
+        double subtotal = COSTO*DISTANCIA;
+        super.solicitarServicio(cliente);
+        boolean condicion;
+        String cn;
+        do{
+            System.out.print("Numero de pasajeros: ");
+            cn = sc.nextLine();
+            condicion = SistemaServicio.validarTipoDato(cn).equals("entero") ;
+            if(condicion == false){
+                System.out.println("ERROR, INGRESE UN NUMERO ENTERO!!!\n");
+            }
+        }while(!condicion);
+        numeroPasajero = Integer.parseInt(cn);
         tipoServicio = TipoServicio.T;
         this.cliente = cliente;
         System.out.println("El subtotal del valor a pagar por el servicio de taxi es de: "+subtotal);
-        System.out.print("Desea confirmar el viaje(SI/NO): ");
-        String continuar = sc.nextLine().toUpperCase();
+        boolean v;
+        String continuar;
+        do{
+            System.out.print("Desea confirmar el viaje(SI/NO): ");
+            continuar = sc.nextLine().toUpperCase();
+            v = continuar.equals("SI") || continuar.equals("NO");
+            if (v == false){
+                System.out.println("ERROR, INGRESE UNA OPCION CORRECTA 'SI' O 'NO'!!!\n");
+            }
+        }while(!v);
         if (continuar.equals("SI")){
             double valorPagar = calcularValorPagar(COSTO,DISTANCIA,tipoPago);
             ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
@@ -78,6 +83,9 @@ public class Taxi extends Servicio{
             SistemaServicio.getServicios().add(this);
             Pago p = new Pago();
             p.escribirPago(this, subtotal, valorPagar);
+            System.out.println(this);
+        } else{
+            System.out.println("\nEL VIAJE HA SIDO CANCELADO\n");
         }
     }
     /**
@@ -98,10 +106,16 @@ public class Taxi extends Servicio{
      * @param tipoPago El tipo de pago (TC o E).
      * @return El valor a pagar por el servicio con el tipo de pago aplicado.
      */
-    public double calcularValorPagar(double costo,int distancia,TipoPago tipoPago){
-        if (tipoPago == TipoPago.TC)
-            return (calcularValorPagar( costo, distancia))*1.15;
-        return calcularValorPagar( costo, distancia);
+    public double calcularValorPagar(double costo,int distancia, TipoPago tipoPago){
+        DecimalFormat df = new DecimalFormat("#.##");
+        double vf;
+        if(tipoPago == tipoPago.TC){
+            vf = calcularValorPagar(costo,distancia)*1.15;
+            return vf;
+        }
+        else{
+            return calcularValorPagar(costo,distancia);
+        }       
     }
     
     @Override
