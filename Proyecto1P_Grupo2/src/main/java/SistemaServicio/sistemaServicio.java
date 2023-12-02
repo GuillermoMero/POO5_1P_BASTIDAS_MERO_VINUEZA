@@ -20,7 +20,7 @@ public class SistemaServicio{
     private static ArrayList<Servicio> servicios;
     public SistemaServicio(){
         usuarios = crearListaUsuarios();
-        servicios = new ArrayList<>();
+        servicios = crearListaServicios();
     }
 
     public static ArrayList<Usuario> getUsuarios() {
@@ -29,16 +29,67 @@ public class SistemaServicio{
     public static ArrayList<Servicio> getServicios() {
         return servicios;
     }
-    
+    public static ArrayList<Servicio> crearListaServicios(){
+        ArrayList<Servicio> arreglo = new ArrayList<>();
+        ArrayList<String[]> listasServicios;
+        ArrayList<String[]> listasViajes;
+        ArrayList<String[]> listasEncomiendas;
+        listasServicios = enpaquetar(ManejoArchivo.LeeFichero("Servicios.txt"));
+        listasViajes = enpaquetar(ManejoArchivo.LeeFichero("Viajes.txt"));
+        listasEncomiendas= enpaquetar(ManejoArchivo.LeeFichero("Encomiendas.txt"));
+        Cliente cli = null;
+        Conductor c = null;
+        for(int i=0; i<listasServicios.size(); i++){ 
+            int numSer = Integer.parseInt(listasServicios.get(i)[0]);
+            TipoServicio ts = TipoServicio.valueOf(listasServicios.get(i)[1]);
+            String origen = listasServicios.get(i)[4];
+            String destino = listasServicios.get(i)[5];
+            String fecha = listasServicios.get(i)[6];
+            String hora = listasServicios.get(i)[7];
+            for(Usuario j : crearListaUsuarios()){
+                if (j instanceof Cliente){
+                    Cliente cli1 = (Cliente) j;
+                    if (cli1.getNumeroCedula().equals(listasServicios.get(i)[2])){
+                        cli = cli1;
+                    }
+                }else{
+                    Conductor c1 = (Conductor) j;
+                    if(c1.getNombre().equals(listasServicios.get(i)[3])){
+                        c = c1;
+                    }
+                }
+            }
+            if(ts == TipoServicio.T){
+                for (int k = 0; k<listasViajes.size();k++){
+                    if (listasViajes.get(k)[0].equals(listasServicios.get(i)[0])){
+                        int numpasa = Integer.parseInt(listasViajes.get(k)[1]);                  
+                        Taxi taxi = new Taxi(numSer,ts,cli,c,origen,destino,fecha,hora,null,numpasa);
+                        arreglo.add(taxi); 
+                    }
+                }
+            }else{
+                for (int k = 0; k<listasEncomiendas.size();k++){
+                    if (listasEncomiendas.get(k)[0].equals(listasServicios.get(i)[0])){
+                        TipoEncomienda te = TipoEncomienda.valueOf(listasEncomiendas.get(k)[1]); 
+                        int cp = Integer.parseInt(listasEncomiendas.get(k)[2]);  
+                        double p = Double.parseDouble(listasEncomiendas.get(k)[3]);  
+                        Encomienda encomienda = new Encomienda(numSer,ts,cli,c,origen,destino,fecha,hora,null,te,cp,p);
+                        arreglo.add(encomienda);
+                    }
+                }
+            }
+        }
+    return arreglo;
+    }
     /**
     * Crea una lista de usuarios a partir de la lectura de archivos de usuarios, conductores y vehículos.
     * @return ArrayList de usuarios con la información obtenida de los archivos.
     */
     public static ArrayList<Usuario> crearListaUsuarios(){
         ArrayList<Usuario> arreglo = new ArrayList<>();
-        ArrayList<String[]> listasUsuarios = new ArrayList<>();
-        ArrayList<String[]> listasConductores = new ArrayList<>();
-        ArrayList<String[]> listasVehiculos = new ArrayList<>();
+        ArrayList<String[]> listasUsuarios;
+        ArrayList<String[]> listasConductores;
+        ArrayList<String[]> listasVehiculos;
         listasUsuarios= enpaquetar(ManejoArchivo.LeeFichero("usuarios.txt"));
         for(int i=0; i<listasUsuarios.size(); i++){
             if("C".equals(listasUsuarios.get(i)[6])){
@@ -205,7 +256,6 @@ public class SistemaServicio{
                     clienteSistema.consultarServicio(servicios);
                     continuar = volverMenu();
                 }else if(opcion.equals("4")){
-                    cerrar = cerrarSistema(continuar,cerrar);
                     continuar = "NO";
                 }
                 System.out.println("\n");
@@ -235,15 +285,15 @@ public class SistemaServicio{
                     System.out.println(conductorSistema.getVehiculo().toString());
                     continuar = volverMenu();
                 }else if(opcion.equals("3")){
-                    cerrar = cerrarSistema(continuar,cerrar);
                     continuar = "NO";
                 }
                 System.out.println("\n");
             }while(continuar.equals("SI"));
+            if (cerrar.equals("SI"))
+                cerrar = cerrarSistema(continuar,cerrar);
         }
-        if (cerrar.equals("SI"))
-            cerrar = cerrarSistema(continuar,cerrar);
         }while(cerrar.equals("SI"));
+        sc.close();
     }
   
     /**
@@ -263,7 +313,7 @@ public class SistemaServicio{
                     System.out.println("ERROR, INGRESE UNA OPCION VALIDA, PUEDE INGRESAR 'SI' O 'NO'!!!\n");
                 }
             }while(!validacion);
-            return cerrar;
+        return cerrar;
   }  
     /**
      * Método creado para las validaciones de los datos ingresados por la clase Scanner

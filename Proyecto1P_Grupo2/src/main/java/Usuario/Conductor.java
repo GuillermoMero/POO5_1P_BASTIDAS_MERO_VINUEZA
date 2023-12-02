@@ -14,12 +14,13 @@ import SistemaServicio.SistemaServicio;
 public class Conductor extends Usuario{
     private EstadoConductor estado;
     private Vehiculo vehiculo;
-
+    
     public Conductor(String numeroCedula, String nombre, String apellidos, String usuario, String contraseña, String numeroCelular, TipoUsuario tipoUsuario, EstadoConductor estado, Vehiculo vehiculo) {
         super(numeroCedula, nombre, apellidos, usuario, contraseña, numeroCelular, tipoUsuario);
         this.estado = estado;
         this.vehiculo = vehiculo;
     }
+
     public void setEstadoConductor(EstadoConductor estado){
         this.estado = estado;
     }
@@ -82,14 +83,23 @@ public class Conductor extends Usuario{
     */
     @Override
     public void consultarServicio(ArrayList<Servicio> servicios) {
+        int contador = 0;
         for(int i=0; i<servicios.size();i++){
             if(servicios.get(i).getConductor().getNombre().equals(getNombre())){
-                System.out.println(servicios.get(i));
-            }else{
-                System.out.println("No tiene asignado algun servicio");
-            }
+                contador++;
+                if(servicios.get(i).GetTipoServicio() == TipoServicio.T){
+                    Taxi t = (Taxi) servicios.get(i);
+                    System.out.println(t.toString("Servicio Taxi"));
+                }else{
+                    Encomienda t = (Encomienda) servicios.get(i);
+                    System.out.println(t.toString());
+                }
+            }             
         }
+        if (contador == 0)
+            System.out.println("No tiene asignado algun servicio\n\n");
     }
+ }
     
-}
+
     

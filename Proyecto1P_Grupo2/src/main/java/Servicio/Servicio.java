@@ -26,8 +26,8 @@ public abstract class Servicio {
         
     }
     
-    public Servicio(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago){
-        this.numServicio++;
+    public Servicio(int numServicio, TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago){
+        this.numServicio = numServicio;
         this.tipoServicio = tipoServicio;
         this.cliente = cliente;
         this.conductor = conductor;

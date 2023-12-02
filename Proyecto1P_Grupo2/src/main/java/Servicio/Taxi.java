@@ -21,8 +21,8 @@ public class Taxi extends Servicio{
     
     public Taxi(){}
     
-    public Taxi(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
-        super(TipoServicio.valueOf("T"), cliente, conductor, origen, destino, fecha, hora, tipoPago);
+    public Taxi(int numServicio,TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, int numeroPasajero){
+        super(numServicio,TipoServicio.valueOf("T"), cliente, conductor, origen, destino, fecha, hora, tipoPago);
         this.numeroPasajero = numeroPasajero;
     }
     
@@ -76,14 +76,14 @@ public class Taxi extends Servicio{
             ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
             Conductor conductorTaxi = Conductor.seleccionarConductorDisponible(usuarios);
             conductor = conductorTaxi;
-            String linea1 = "\n"+(ManejoArchivo.LeeFichero("Viajes.txt").size())+","+numeroPasajero+","+DISTANCIA+","+subtotal;
+            String linea1 = "\n"+(ManejoArchivo.LeeFichero("Servicios.txt").size())+","+numeroPasajero+","+DISTANCIA+","+subtotal;
             ManejoArchivo.EscribirArchivo("Viajes.txt",linea1);
             setNumServicio((ManejoArchivo.LeeFichero("Servicios.txt").size()));
             escribirServicio();
             SistemaServicio.getServicios().add(this);
             Pago p = new Pago();
             p.escribirPago(this, subtotal, valorPagar);
-            System.out.println(this);
+            System.out.println(toString("Viaje"));
         } else{
             System.out.println("\nEL VIAJE HA SIDO CANCELADO\n");
         }
@@ -122,9 +122,8 @@ public class Taxi extends Servicio{
      * Presenta por pantala la informacion del Servicio de taxi solicitado
      * @return Los datos del Servicio de Taxi
      */
-    @Override
-    public String toString(){
-        return "/*********************************************/ \nTipo: Viaje \nCantidad pasajeros: "+numeroPasajero+"\nFecha: "+fecha+"\nHora: "+hora+"\nDesde: "+origen+"\nHasta: "+destino+"\n";
+    public String toString(String tipos){
+        return "/*********************************************/ \nTipo: "+tipos+" \nCantidad pasajeros: "+numeroPasajero+"\nFecha: "+fecha+"\nHora: "+hora+"\nDesde: "+origen+"\nHasta: "+destino+"\n";
     }
     
 }

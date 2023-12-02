@@ -20,8 +20,8 @@ public class Encomienda extends Servicio{
     
     public Encomienda(){}
     
-    public Encomienda(TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, TipoEncomienda tipoEncomienda, int cantidadProducto, double peso){
-        super(tipoServicio,cliente,conductor,origen,destino,fecha,hora,tipoPago);
+    public Encomienda(int numServicio, TipoServicio tipoServicio, Cliente cliente, Conductor conductor, String origen, String destino, String fecha, String hora, TipoPago tipoPago, TipoEncomienda tipoEncomienda, int cantidadProducto, double peso){
+        super(numServicio, tipoServicio,cliente,conductor,origen,destino,fecha,hora,tipoPago);
         this.tipoEncomienda = tipoEncomienda;
         this.cantidadProducto = cantidadProducto;
         this.peso = peso;
@@ -128,14 +128,14 @@ public class Encomienda extends Servicio{
             double valorPagar = calcularValorPagar(subtotal, tipoPago);
             ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
             conductor = Conductor.seleccionarConductorDisponibleM(usuarios);
-            String linea1 = "\n"+(ManejoArchivo.LeeFichero("Encomiendas.txt").size())+","+tipoEncomienda+","+cantidadProducto+","+peso+","+subtotal;
+            String linea1 = "\n"+(ManejoArchivo.LeeFichero("Servicios.txt").size())+","+tipoEncomienda+","+cantidadProducto+","+peso+","+subtotal;
             ManejoArchivo.EscribirArchivo("Encomiendas.txt",linea1);
             setNumServicio((ManejoArchivo.LeeFichero("Servicios.txt").size()));
             escribirServicio();
             SistemaServicio.getServicios().add(this);
             Pago p = new Pago();
             p.escribirPago(this, subtotal, valorPagar);
-            System.out.println(this);
+            System.out.println(toString());
         }else{
             System.out.println("\nLA ENCOMIENDA HA SIDO CANCELADA\n");
         }

@@ -58,10 +58,23 @@ public class Cliente extends Usuario{
     */
     @Override
     public void consultarServicio(ArrayList<Servicio> servicios) {
+        int contador = 0;
         for(int i=0; i<servicios.size();i++){
-            System.out.println(servicios.get(i));
+            if(servicios.get(i).getCliente().getNumeroCedula().equals(getNumeroCedula())){
+                contador++;
+                if(servicios.get(i).GetTipoServicio() == TipoServicio.T){
+                    Taxi t = (Taxi) servicios.get(i);
+                    System.out.println(t.toString("Viaje"));
+                }else{
+                    Encomienda t = (Encomienda) servicios.get(i);
+                    System.out.println(t.toString());
+                }
+            }            
         }
+        if (contador == 0)
+            System.out.println("No ha solicitado ningun servicio\n\n");
     }
+    
     /**
     * Llena los datos adicionales del cliente como edad y número de tarjeta de crédito.
     * Si el cliente no existe en el archivo de clientes, solicita y guarda su información.
