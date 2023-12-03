@@ -29,6 +29,11 @@ public class SistemaServicio{
     public static ArrayList<Servicio> getServicios() {
         return servicios;
     }
+     /**
+     * Crea una lista de servicios a partir de archivos de texto.
+     *
+     * @return ArrayList de objetos Servicio con la información obtenida de archivos de texto.
+     */
     public static ArrayList<Servicio> crearListaServicios(){
         ArrayList<Servicio> arreglo = new ArrayList<>();
         ArrayList<String[]> listasServicios;
