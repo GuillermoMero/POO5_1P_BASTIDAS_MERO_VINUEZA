@@ -34,17 +34,17 @@ public class SistemaServicio{
      *
      * @return ArrayList de objetos Servicio con la información obtenida de archivos de texto.
      */
-    public static ArrayList<Servicio> crearListaServicios(){
+    public static ArrayList<Servicio> crearListaServicios(){ //Este metodo lee el archivo Servicios, Viajes, Encomienda para crear un ArrayList de Servicio
         ArrayList<Servicio> arreglo = new ArrayList<>();
         ArrayList<String[]> listasServicios;
         ArrayList<String[]> listasViajes;
         ArrayList<String[]> listasEncomiendas;
-        listasServicios = enpaquetar(ManejoArchivo.LeeFichero("Servicios.txt"));
+        listasServicios = enpaquetar(ManejoArchivo.LeeFichero("Servicios.txt")); //Lee archivo y con el metodo enpaquetar crear una lista donde sus elementos son las lineas del archivo pero ya separados por ",".
         listasViajes = enpaquetar(ManejoArchivo.LeeFichero("Viajes.txt"));
         listasEncomiendas= enpaquetar(ManejoArchivo.LeeFichero("Encomiendas.txt"));
         Cliente cli = null;
         Conductor c = null;
-        for(int i=0; i<listasServicios.size(); i++){ 
+        for(int i=0; i<listasServicios.size(); i++){ //Realizar una indexación a las listas y asginarlas a una variable
             int numSer = Integer.parseInt(listasServicios.get(i)[0]);
             TipoServicio ts = TipoServicio.valueOf(listasServicios.get(i)[1]);
             String origen = listasServicios.get(i)[4];
@@ -52,19 +52,19 @@ public class SistemaServicio{
             String fecha = listasServicios.get(i)[6];
             String hora = listasServicios.get(i)[7];
             for(Usuario j : crearListaUsuarios()){
-                if (j instanceof Cliente){
-                    Cliente cli1 = (Cliente) j;
-                    if (cli1.getNumeroCedula().equals(listasServicios.get(i)[2])){
+                if (j instanceof Cliente){ // Validacion para revisar el tipo de usuario usando el "instanceof"
+                    Cliente cli1 = (Cliente) j; //Dowcasting
+                    if (cli1.getNumeroCedula().equals(listasServicios.get(i)[2])){ //Validar si el numero de cedula de cl1 es igual al de un cliente de los archivos
                         cli = cli1;
                     }
                 }else{
-                    Conductor c1 = (Conductor) j;
+                    Conductor c1 = (Conductor) j; //Dowcasting
                     if(c1.getNombre().equals(listasServicios.get(i)[3])){
                         c = c1;
                     }
                 }
             }
-            if(ts == TipoServicio.T){
+            if(ts == TipoServicio.T){ //Validacion para ver si el servicio es de tipo Taxi o Encomienda
                 for (int k = 0; k<listasViajes.size();k++){
                     if (listasViajes.get(k)[0].equals(listasServicios.get(i)[0])){
                         int numpasa = Integer.parseInt(listasViajes.get(k)[1]);                  
@@ -97,7 +97,8 @@ public class SistemaServicio{
         ArrayList<String[]> listasVehiculos;
         listasUsuarios= enpaquetar(ManejoArchivo.LeeFichero("usuarios.txt"));
         for(int i=0; i<listasUsuarios.size(); i++){
-            if("C".equals(listasUsuarios.get(i)[6])){
+            if("C".equals(listasUsuarios.get(i)[6])){ //Validacion para ver si el usuario es de tipo Cliente o Conductor
+                //
                 Cliente usuario = new Cliente(listasUsuarios.get(i)[0],listasUsuarios.get(i)[1],listasUsuarios.get(i)[2],listasUsuarios.get(i)[3],listasUsuarios.get(i)[4],listasUsuarios.get(i)[5],TipoUsuario.valueOf(listasUsuarios.get(i)[6]),0, "");
                 arreglo.add(usuario);
             }else{
@@ -126,11 +127,11 @@ public class SistemaServicio{
     * @param arreglo La lista de cadenas a ser convertida.
     * @return ArrayList de arreglos de cadenas obtenidos de la lista de cadenas.
     */
-    public static ArrayList<String []> enpaquetar(ArrayList<String> arreglo){
+    public static ArrayList<String []> enpaquetar(ArrayList<String> arreglo){ //metodo creado para ahorro de codigo.
         ArrayList<String []> lista = new ArrayList<>();
         for(int i=0; i<arreglo.size(); i++){
             if(i>0){
-                String [] partes = arreglo.get(i).split(",");
+                String [] partes = arreglo.get(i).split(","); //Separar la cadena por el caracter "," y guardarlas en una lista.
                 lista.add(partes);
             }
             
@@ -222,17 +223,17 @@ public class SistemaServicio{
             user = sc.nextLine();
             System.out.print("CONTRASENA: ");
             contrasena = sc.nextLine();
-            usuarioSistema = SistemaServicio.validarUsuario(usuarios, user, contrasena);
+            usuarioSistema = SistemaServicio.validarUsuario(usuarios, user, contrasena); //Valida si el usuario y contraseña son correctos con el metodo validadUsuario
             if (usuarioSistema == null){
                 System.out.println("ERROR, INGRESE UN USUARIO Y CONTRASEÑA QUE SE ENCUENTREN EN LA BASE DE DATOS!!!\n");
             }
-        }while(usuarioSistema == null);
+        }while(usuarioSistema == null); //Estructura de control que hace obligar que se ingrese datos.
         
         /**
          * Validacion de si el usuario ingresado es de tipo Cliente(C) o Conductor (R)
          */
         if(TipoUsuario.C == usuarioSistema.getTipoUsuario()){
-            Cliente clienteSistema = (Cliente) usuarioSistema;
+            Cliente clienteSistema = (Cliente) usuarioSistema; //Dowcasting
             clienteSistema.llenarDatos();
             
             do{
@@ -249,7 +250,7 @@ public class SistemaServicio{
                 System.out.println("\n");
                 if(opcion.equals("1")){
                     Taxi t = new Taxi();
-                    t.solicitarServicio(clienteSistema);
+                    t.solicitarServicio(clienteSistema); //Aqui se hace el ingresado de los datos para la solicitud de un Servicio
                     System.out.println("\n");
                     continuar = volverMenu();
                 }else if(opcion.equals("2")){
@@ -258,7 +259,7 @@ public class SistemaServicio{
                     System.out.println("\n");
                     continuar = volverMenu();
                 }else if(opcion.equals("3")){
-                    clienteSistema.consultarServicio(servicios);
+                    clienteSistema.consultarServicio(servicios); //Muestra por consola todas los servecios que haya solicitado el usuario ingresado.
                     continuar = volverMenu();
                 }else if(opcion.equals("4")){
                     continuar = "NO";
@@ -268,7 +269,7 @@ public class SistemaServicio{
             if (cerrar.equals("SI"))
                 cerrar = cerrarSistema(continuar,cerrar);
         }else if(TipoUsuario.R == usuarioSistema.getTipoUsuario()){
-            Conductor conductorSistema = (Conductor)usuarioSistema;
+            Conductor conductorSistema = (Conductor)usuarioSistema; //Dowcasting
             
             do{
                 presentarMenuConductor();
@@ -287,7 +288,7 @@ public class SistemaServicio{
                     continuar = volverMenu();
                 }else if(opcion.equals("2")){
                     System.out.println("/*********************************************/ \nVEHICULO DEL CONDUCTOR: "+conductorSistema.getNombre()+" "+conductorSistema.getApellidos());
-                    System.out.println(conductorSistema.getVehiculo().toString());
+                    System.out.println(conductorSistema.getVehiculo().toString()); //Llamar el metodo toString con el metodo getter de vehiculo de la clase conductor.
                     continuar = volverMenu();
                 }else if(opcion.equals("3")){
                     continuar = "NO";

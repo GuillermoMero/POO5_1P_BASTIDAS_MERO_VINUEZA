@@ -9,5 +9,7 @@ package Servicio;
  * @author LENOVO
  */
 public enum TipoServicio {
+    //T: Taxi
+    //E: Encomienda
     T, E
 }

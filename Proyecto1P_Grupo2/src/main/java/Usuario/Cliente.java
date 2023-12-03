@@ -88,7 +88,7 @@ public class Cliente extends Usuario{
                 validar = validar + 1;
             }
         }
-        if (validar == 0){
+        if (validar == 0){ //Validacion para cuando un cliente ingrese por primera vez le pidan su edad y numero de TC para registralo.
            boolean condicion;
            String cedad;
            do{

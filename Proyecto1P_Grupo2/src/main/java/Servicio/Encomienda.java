@@ -128,13 +128,14 @@ public class Encomienda extends Servicio{
             double valorPagar = calcularValorPagar(subtotal, tipoPago);
             ArrayList<Usuario> usuarios = SistemaServicio.crearListaUsuarios();
             conductor = Conductor.seleccionarConductorDisponibleM(usuarios);
+            //Guardar los datos en sus respectivos archivos.
             String linea1 = "\n"+(ManejoArchivo.LeeFichero("Servicios.txt").size())+","+tipoEncomienda+","+cantidadProducto+","+peso+","+subtotal;
-            ManejoArchivo.EscribirArchivo("Encomiendas.txt",linea1);
+            ManejoArchivo.EscribirArchivo("Encomiendas.txt",linea1); 
             setNumServicio((ManejoArchivo.LeeFichero("Servicios.txt").size()));
             escribirServicio();
-            SistemaServicio.getServicios().add(this);
+            SistemaServicio.getServicios().add(this); //Agrega el objeto que se creo a largo de todo el metodo al ArrayList de tipo Servicio.
             Pago p = new Pago();
-            p.escribirPago(this, subtotal, valorPagar);
+            p.escribirPago(this, subtotal, valorPagar); //Escribi los datos en el achivo Pagos.
             System.out.println(toString());
         }else{
             System.out.println("\nLA ENCOMIENDA HA SIDO CANCELADA\n");

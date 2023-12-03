@@ -109,7 +109,7 @@ public class Taxi extends Servicio{
     public double calcularValorPagar(double costo,int distancia, TipoPago tipoPago){
         DecimalFormat df = new DecimalFormat("#.##");
         double vf;
-        if(tipoPago == tipoPago.TC){
+        if(tipoPago == tipoPago.TC){ //Validacion de cuando se pago con tarjeta de credito se le aumente el 15%.
             vf = calcularValorPagar(costo,distancia)*1.15;
             return vf;
         }
